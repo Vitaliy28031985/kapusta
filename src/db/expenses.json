@@ -1,0 +1,144 @@
+{
+  "expenses": [
+    {
+      "id": 1,
+      "date": "2025-10-01",
+      "description": "Coffee from café",
+      "category": "food & drinks",
+      "sum": 85
+    },
+    {
+      "id": 2,
+      "date": "2025-10-01",
+      "description": "Lunch at restaurant",
+      "category": "food & drinks",
+      "sum": 210
+    },
+    {
+      "id": 3,
+      "date": "2025-10-02",
+      "description": "Metro ride",
+      "category": "transport",
+      "sum": 24
+    },
+    {
+      "id": 4,
+      "date": "2025-10-02",
+      "description": "Fruit purchase",
+      "category": "groceries",
+      "sum": 160
+    },
+    {
+      "id": 5,
+      "date": "2025-10-03",
+      "description": "Mobile service payment",
+      "category": "utilities",
+      "sum": 200
+    },
+    {
+      "id": 6,
+      "date": "2025-10-04",
+      "description": "Book purchase",
+      "category": "education",
+      "sum": 350
+    },
+    {
+      "id": 7,
+      "date": "2025-10-05",
+      "description": "Grocery shopping at supermarket",
+      "category": "groceries",
+      "sum": 690
+    },
+    {
+      "id": 8,
+      "date": "2025-10-06",
+      "description": "Internet bill",
+      "category": "utilities",
+      "sum": 250
+    },
+    {
+      "id": 9,
+      "date": "2025-10-07",
+      "description": "Cinema tickets",
+      "category": "entertainment",
+      "sum": 300
+    },
+    {
+      "id": 10,
+      "date": "2025-10-08",
+      "description": "Clothing purchase",
+      "category": "clothing",
+      "sum": 1200
+    },
+    {
+      "id": 11,
+      "date": "2025-10-09",
+      "description": "Gas for car",
+      "category": "transport",
+      "sum": 1450
+    },
+    {
+      "id": 12,
+      "date": "2025-10-10",
+      "description": "Work lunch",
+      "category": "food & drinks",
+      "sum": 180
+    },
+    {
+      "id": 13,
+      "date": "2025-10-11",
+      "description": "Medicine from pharmacy",
+      "category": "health",
+      "sum": 320
+    },
+    {
+      "id": 14,
+      "date": "2025-10-12",
+      "description": "Gift for friend",
+      "category": "gifts",
+      "sum": 600
+    },
+    {
+      "id": 15,
+      "date": "2025-10-14",
+      "description": "Taxi to the station",
+      "category": "transport",
+      "sum": 180
+    },
+    {
+      "id": 16,
+      "date": "2025-10-15",
+      "description": "Vegetables from market",
+      "category": "groceries",
+      "sum": 230
+    },
+    {
+      "id": 17,
+      "date": "2025-10-18",
+      "description": "Dinner at restaurant",
+      "category": "entertainment",
+      "sum": 850
+    },
+    {
+      "id": 18,
+      "date": "2025-10-20",
+      "description": "Utility bills",
+      "category": "utilities",
+      "sum": 1750
+    },
+    {
+      "id": 19,
+      "date": "2025-10-23",
+      "description": "Haircut",
+      "category": "personal care",
+      "sum": 250
+    },
+    {
+      "id": 20,
+      "date": "2025-10-25",
+      "description": "Concert ticket",
+      "category": "entertainment",
+      "sum": 900
+    }
+  ]
+}

@@ -1,0 +1,142 @@
+[
+  {
+    "id": 1,
+    "date": "2025-11-01",
+    "description": "Monthly salary",
+    "category": "Main income",
+    "sum": 3200
+  },
+  {
+    "id": 2,
+    "date": "2025-11-02",
+    "description": "Freelance web project",
+    "category": "Side income",
+    "sum": 850
+  },
+  {
+    "id": 3,
+    "date": "2025-11-03",
+    "description": "Sold old laptop",
+    "category": "One-time income",
+    "sum": 600
+  },
+  {
+    "id": 4,
+    "date": "2025-11-04",
+    "description": "Dividend payment",
+    "category": "Investment income",
+    "sum": 150
+  },
+  {
+    "id": 5,
+    "date": "2025-11-05",
+    "description": "Interest from savings account",
+    "category": "Passive income",
+    "sum": 45
+  },
+  {
+    "id": 6,
+    "date": "2025-11-06",
+    "description": "Online course sales",
+    "category": "Business income",
+    "sum": 420
+  },
+  {
+    "id": 7,
+    "date": "2025-11-07",
+    "description": "Gift from family",
+    "category": "Gift",
+    "sum": 200
+  },
+  {
+    "id": 8,
+    "date": "2025-11-08",
+    "description": "Sold used phone",
+    "category": "One-time income",
+    "sum": 250
+  },
+  {
+    "id": 9,
+    "date": "2025-11-09",
+    "description": "Rental property income",
+    "category": "Passive income",
+    "sum": 900
+  },
+  {
+    "id": 10,
+    "date": "2025-11-10",
+    "description": "Consulting project",
+    "category": "Side income",
+    "sum": 1100
+  },
+  {
+    "id": 11,
+    "date": "2025-11-11",
+    "description": "Affiliate marketing earnings",
+    "category": "Online income",
+    "sum": 300
+  },
+  {
+    "id": 12,
+    "date": "2025-11-12",
+    "description": "Cashback and rewards",
+    "category": "Miscellaneous",
+    "sum": 75
+  },
+  {
+    "id": 13,
+    "date": "2025-11-13",
+    "description": "App development contract",
+    "category": "Freelance",
+    "sum": 1500
+  },
+  {
+    "id": 14,
+    "date": "2025-11-14",
+    "description": "Sold furniture",
+    "category": "One-time income",
+    "sum": 400
+  },
+  {
+    "id": 15,
+    "date": "2025-11-15",
+    "description": "Commission from sales",
+    "category": "Business income",
+    "sum": 500
+  },
+  {
+    "id": 16,
+    "date": "2025-11-16",
+    "description": "Stock profit",
+    "category": "Investment income",
+    "sum": 700
+  },
+  {
+    "id": 17,
+    "date": "2025-11-17",
+    "description": "Tutoring session",
+    "category": "Side income",
+    "sum": 100
+  },
+  {
+    "id": 18,
+    "date": "2025-11-18",
+    "description": "YouTube ad revenue",
+    "category": "Online income",
+    "sum": 280
+  },
+  {
+    "id": 19,
+    "date": "2025-11-19",
+    "description": "Freelance graphic design",
+    "category": "Freelance",
+    "sum": 600
+  },
+  {
+    "id": 20,
+    "date": "2025-11-20",
+    "description": "Bonus from employer",
+    "category": "Main income",
+    "sum": 1200
+  }
+]

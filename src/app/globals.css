@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.scrollbar-bt_col {
+  scrollbar-color: rgba(255, 117, 29, 1) rgba(245, 246, 251, 1);
+  scrollbar-width: thin;
+}
+
+.icon-container svg {
+  fill: currentColor;
+}

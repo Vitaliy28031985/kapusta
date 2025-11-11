@@ -1,0 +1,79 @@
+{
+  "incomeCategories": [
+    {
+      "id": 1,
+      "name": "Salary & Wages",
+      "description": "Main job salary, bonuses, and overtime pay"
+    },
+    {
+      "id": 2,
+      "name": "Freelance & Contract Work",
+      "description": "Earnings from freelance projects or independent work"
+    },
+    {
+      "id": 3,
+      "name": "Business Income",
+      "description": "Profits from owned business or self-employment"
+    },
+    {
+      "id": 4,
+      "name": "Investments",
+      "description": "Dividends, capital gains, and stock market profits"
+    },
+    {
+      "id": 5,
+      "name": "Rental Income",
+      "description": "Money earned from renting properties or equipment"
+    },
+    {
+      "id": 6,
+      "name": "Interest Income",
+      "description": "Earnings from savings accounts, deposits, or loans"
+    },
+    {
+      "id": 7,
+      "name": "Royalties",
+      "description": "Payments for creative works, patents, or licensing"
+    },
+    {
+      "id": 8,
+      "name": "Gifts & Donations",
+      "description": "Money received as gifts or personal donations"
+    },
+    {
+      "id": 9,
+      "name": "Grants & Scholarships",
+      "description": "Educational or research funding support"
+    },
+    {
+      "id": 10,
+      "name": "Pension & Retirement",
+      "description": "Income from retirement plans or pensions"
+    },
+    {
+      "id": 11,
+      "name": "Social Benefits",
+      "description": "Government support, unemployment, or disability benefits"
+    },
+    {
+      "id": 12,
+      "name": "Refunds & Reimbursements",
+      "description": "Returned money from overpayments or business expenses"
+    },
+    {
+      "id": 13,
+      "name": "Online Income",
+      "description": "Earnings from YouTube, affiliate marketing, or digital sales"
+    },
+    {
+      "id": 14,
+      "name": "Crypto & Trading",
+      "description": "Profits from cryptocurrency or forex trading"
+    },
+    {
+      "id": 15,
+      "name": "Other",
+      "description": "Miscellaneous or uncategorized income sources"
+    }
+  ]
+}

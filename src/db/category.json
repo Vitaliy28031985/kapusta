@@ -1,0 +1,79 @@
+{
+  "expenseCategories": [
+    {
+      "id": 1,
+      "name": "Food & Groceries",
+      "description": "Meals, snacks, groceries, and dining out"
+    },
+    {
+      "id": 2,
+      "name": "Transportation",
+      "description": "Fuel, public transit, taxis, car maintenance"
+    },
+    {
+      "id": 3,
+      "name": "Housing",
+      "description": "Rent, mortgage, utilities, home maintenance"
+    },
+    {
+      "id": 4,
+      "name": "Health & Medical",
+      "description": "Medicine, doctor visits, insurance, gym"
+    },
+    {
+      "id": 5,
+      "name": "Entertainment",
+      "description": "Movies, streaming services, games, hobbies"
+    },
+    {
+      "id": 6,
+      "name": "Education",
+      "description": "Courses, books, tuition, training"
+    },
+    {
+      "id": 7,
+      "name": "Clothing & Accessories",
+      "description": "Clothes, shoes, jewelry, accessories"
+    },
+    {
+      "id": 8,
+      "name": "Utilities",
+      "description": "Electricity, water, gas, internet, phone"
+    },
+    {
+      "id": 9,
+      "name": "Travel",
+      "description": "Flights, hotels, vacations, luggage"
+    },
+    {
+      "id": 10,
+      "name": "Personal Care",
+      "description": "Haircuts, cosmetics, beauty treatments"
+    },
+    {
+      "id": 11,
+      "name": "Pets",
+      "description": "Food, vet visits, grooming, accessories"
+    },
+    {
+      "id": 12,
+      "name": "Gifts & Donations",
+      "description": "Charity, presents, social contributions"
+    },
+    {
+      "id": 13,
+      "name": "Insurance",
+      "description": "Car, health, life, home insurance"
+    },
+    {
+      "id": 14,
+      "name": "Debt & Loans",
+      "description": "Loan payments, credit cards, interest"
+    },
+    {
+      "id": 15,
+      "name": "Other",
+      "description": "Miscellaneous or uncategorized expenses"
+    }
+  ]
+}
