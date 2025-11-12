@@ -9,7 +9,9 @@ const Header = () => {
                 <Image src='/logo.svg' alt="Kapusta" width={90} height={31} priority></Image>
                 
                 {isLogin && (<div className="flex items-center gap-4">
-                        <Image src='/user.png' alt="User" width={32} height={32}></Image>
+                    <div className="w-[32px] h-[32px] bg-bg_fon rounded-full flex items-center justify-center">
+                        <p className="font-bold text-text_color">U</p>
+                    </div>
                         <p className="mob:hidden tab:block text-text_op text-xs font-normal">User Name</p>
                  <button type="button" className="mob:block tab:hidden text-text_color hover:text-text_op"><HiMiniArrowRightStartOnRectangle/></button>
                     <button type="button" className="mob:hidden tab:block text-text_color text-xs font-normal underline  px-3 border-l-4 border-gray-600 hover:text-text_op">Exit</button>
@@ -21,4 +23,3 @@ const Header = () => {
 }
 
 export default Header;
-// 
