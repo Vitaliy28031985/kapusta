@@ -7,7 +7,8 @@ import categories from '../../../db/categoryIncome.json';
  
 const AddIncome: React.FC<AddExpenseProps> = ({ isShowAdd }: AddExpenseProps) => {
     const onSubmit = async (formData: FormData) => { 
-       const data =  await addIncome(formData);
+        const data = await addIncome(formData);
+         console.log(data);
         isShowAdd();
     }
     return (

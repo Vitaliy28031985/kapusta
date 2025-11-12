@@ -7,7 +7,8 @@ import AddExpenseProps from "@/app/interfaces/addExpense";
  
 const AddExpense: React.FC<AddExpenseProps> = ({ isShowAdd }: AddExpenseProps) => {
     const onSubmit = async (formData: FormData) => { 
-       const data =  await addExpense(formData);
+        const data = await addExpense(formData);
+        console.log(data);
         isShowAdd();
     }
     return (

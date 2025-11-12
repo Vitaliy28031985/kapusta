@@ -31,7 +31,8 @@ const AddExpenseModule = ({ isShowAdd }: AddExpenseProps) => {
 
 
     const onSubmit = async (formData: FormData) => { 
-       const data =  await addExpense(formData);
+      const data = await addExpense(formData);
+       console.log(data);
         isShowAdd();
     }
 
