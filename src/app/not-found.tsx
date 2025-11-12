@@ -1,3 +1,4 @@
+import Link from "next/link";
 const NotFoundPage = () => {
     return (
         <main className="flex min-h-screen flex-col items-center justify-center bg-[#f8f9fb] text-center">
@@ -7,12 +8,12 @@ const NotFoundPage = () => {
                 <p className="text-gray-500 mb-8">
                     Oops! The page you’re looking for doesn’t exist or was moved.
                 </p>
-                <a
+                <Link
                     href="/"
                     className="rounded-full bg-bt_col text-white px-8 py-3 font-semibold shadow hover:bg-orange-600 transition-colors duration-200"
                 >
                     Go Home
-                </a>
+                </Link>
             </div>
 
             
