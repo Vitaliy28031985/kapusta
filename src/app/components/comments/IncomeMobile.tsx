@@ -5,6 +5,7 @@ import { FaArrowLeft } from 'react-icons/fa';
 import FilterMobile from './FilterMobile';
 import { Data, defaultData } from '@/app/interfaces/filter';
 import TabletIncomeMobile from './TabletIncomeMobile';
+import { category } from "@/db/categoryIncome";
 
 
 interface Incomes {
@@ -26,7 +27,7 @@ const IncomeMobile = ({onToggle, toggle}: Incomes) => {
         <div>
             <button onClick={onToggle} className='text-text_op hover:text-bt_col ml-5 mt-4' type='button'>{!toggle ? (<div className='flex items-center gap-2'>Filter <FaArrowRight className="size-6"/></div>) : (<FaArrowLeft className="size-6" />) } </button>
             
-            {toggle && (<FilterMobile filterData={getFilterData} />)}
+            {toggle && (<FilterMobile category={category} filterData={getFilterData} />)}
             {!toggle && (<TabletIncomeMobile/>)}
 
         </div>

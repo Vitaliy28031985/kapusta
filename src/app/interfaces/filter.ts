@@ -1,3 +1,5 @@
+import { DataCategory } from "./report";
+
 export interface Data {
   date: Date;
   description: string;
@@ -6,7 +8,8 @@ export interface Data {
 }
 
 export interface FilterProps { 
-  filterData: (data: Data) => void
+  filterData: (data: Data) => void;
+  category: DataCategory[];
 }
 
  export const defaultData = {

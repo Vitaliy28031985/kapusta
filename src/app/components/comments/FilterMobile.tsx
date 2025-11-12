@@ -2,9 +2,9 @@
 import { useRef, useState } from "react";
 import { FaAngleDown, FaCalculator, FaRegCalendarDays } from "react-icons/fa6";
 import { Data, defaultData, FilterProps } from "@/app/interfaces/filter";
-import categories from '../../../db/category.json';
 
-const FilterMobile = ({ filterData }: FilterProps) => {
+
+const FilterMobile = ({ filterData, category }: FilterProps) => {
     const [data, setData] = useState<Data>(defaultData);
       
     const [showMenu, setShowMenu] = useState(false);
@@ -102,7 +102,7 @@ const FilterMobile = ({ filterData }: FilterProps) => {
                 </button>
                 {showMenu && (
                 <div className="z-50 bg-white w-[280px]   absolute top-10 left-5 shadow-shadow_menu">
-                {categories && categories.expenseCategories.map(({ name, id }) => (
+                {category && category.map(({ name, id }) => (
                 <div className=" px-5 py-1 text-menu_text font-normal text-sx hover:text-text_color hover:bg-bg_fon cursor-poi  "
                   onClick={() => {
                     setData({ ...data, category: name });

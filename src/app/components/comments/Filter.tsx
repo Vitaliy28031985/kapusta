@@ -4,12 +4,12 @@ import { useRef, useState } from "react";
 import { FaRegCalendarDays } from 'react-icons/fa6';
 import { FaAngleDown } from 'react-icons/fa';
 import { FaCalculator } from 'react-icons/fa';
-import categories from '../../../db/category.json';
+// import categories from '../../../db/category.json';
 import { Data, defaultData, FilterProps } from "@/app/interfaces/filter";
 
 
  
-const Filter = ({filterData}: FilterProps) => {
+const Filter = ({filterData, category}: FilterProps) => {
   const [data, setData] = useState<Data>(defaultData);
   const [showMenu, setShowMenu] = useState(false);
 
@@ -107,7 +107,7 @@ const submit = (e: React.FormEvent<HTMLFormElement>) => {
                       </button>
                     {showMenu && (
                     <div className="z-50 bg-white w-[182px]   absolute top-10 left-0 shadow-shadow_menu">
-                    {categories && categories.expenseCategories.map(({ name, id }) => (
+                    {category && category?.map(({ name, id }) => (
                    <div className=" 
                     px-5 py-1 text-menu_text font-normal text-sx hover:text-text_color hover:bg-bg_fon cursor-pointer
                     "
