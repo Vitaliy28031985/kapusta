@@ -2,7 +2,7 @@
 
 import { addIncome } from "@/actions/addIncome";
 import AddExpenseProps from "@/app/interfaces/addExpense";
-import categories from '../../../db/categoryIncome.json';
+import {category} from '../../../db/categoryIncome';
 
  
 const AddIncome: React.FC<AddExpenseProps> = ({ isShowAdd }: AddExpenseProps) => {
@@ -23,7 +23,7 @@ const AddIncome: React.FC<AddExpenseProps> = ({ isShowAdd }: AddExpenseProps) =>
         <div className="w-full tab:w-[156px] desk:w-[179px] text-center text-sx font-normal text-text_op">
             <select className="appearance-none  w-full  desk:pl-5 tab:w-[106px] desk:w-[149px] focus:outline-none"  name="category" autoComplete="off" defaultValue="Select a category">
             {
-            categories.incomeCategories.map(({ id, name }) => (
+            category.map(({ id, name }) => (
                 <option key={id} value={name}>
                     {name}
                 </option> 

@@ -1,7 +1,7 @@
 'use client'
 
 import { addExpense } from "@/actions/addExpense";
-import categories from '../../../db/category.json';
+import {category} from '../../../db/categoryExpenses';
 import AddExpenseProps from "@/app/interfaces/addExpense";
 
  
@@ -23,7 +23,7 @@ const AddExpense: React.FC<AddExpenseProps> = ({ isShowAdd }: AddExpenseProps) =
         <div className="w-full tab:w-[156px] desk:w-[179px] text-center text-sx font-normal text-text_op">
             <select className="appearance-none  w-full  desk:pl-5 tab:w-[106px] desk:w-[149px] focus:outline-none"  name="category" autoComplete="off" defaultValue="Select a category">
             {
-            categories.expenseCategories.map(({ id, name }) => (
+            category.map(({ id, name }) => (
                 <option key={id} value={name}>
                     {name}
                 </option> 

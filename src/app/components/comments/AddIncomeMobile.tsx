@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import { AiOutlineClose } from 'react-icons/ai';
 import AddExpenseProps from "@/app/interfaces/addExpense";
-import categories from '../../../db/categoryIncome.json';
+import {category} from '../../../db/categoryIncome';
 import { addIncome } from "@/actions/addIncome";
 
 
@@ -57,7 +57,7 @@ return (
               <label htmlFor="category" className="flex items-start mb-3 text-sx font-normal">Category:</label>      
                 <select className="px-5 w-full h-[52px] text-[14px] text-inp_col rounded-[50px] bg-bg_fon focus:outline-none" id="category" name="category" autoComplete="off" defaultValue="" >
                 {
-                    categories.incomeCategories.map(({ id, name }) => (
+                    category.map(({ id, name }) => (
                         <option key={id} value={name}>
                             {name}
                         </option> 
