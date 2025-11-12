@@ -2,11 +2,12 @@
 
 import { useState } from 'react';
 import { category } from '.././../../db/categoryExpenses';
+import { CategoryProps } from '@/app/interfaces/report';
 
-const Category = () => {
+const Category = ({categoryData}: CategoryProps) => {
     const [nameCategory, setNameCategory] = useState('products');
     
-    console.log(nameCategory)
+    categoryData(nameCategory);
 
     return (
         <form className='mob:px-2 tab:px-10 desk:px-[115px] flex items-center justify-center flex-wrap mob:gap-12 tab:gap-14 desk:gap-20'>

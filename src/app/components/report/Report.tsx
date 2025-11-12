@@ -25,11 +25,12 @@ const data = [
 
 const ReportContainer = () => {
   const [change, setChange] = useState(false)
+  const [categoryData, setCategoryData] = useState<string>('');
   const [currentDate, setCurrentDate] = useState(new Date(2025, 10));
   
   const toggle = () => setChange(toggle => !toggle)
 
-    console.log(currentDate)
+   
   const handlePrev = () => {
     setCurrentDate((prev) => subMonths(prev, 1));
   };
@@ -38,6 +39,12 @@ const ReportContainer = () => {
     setCurrentDate((prev) => addMonths(prev, 1));
   };
 
+
+  const getCategoryData = (category: string) => {
+          setCategoryData(category);
+  }
+  
+ console.log(currentDate, categoryData)
     return (
         <main className="relative min-h-screen">
             
@@ -79,7 +86,7 @@ const ReportContainer = () => {
               <p className="text-sm font-bold">{change ? 'INCOME' : 'EXPENSES'}</p>
               <button onClick={toggle} type="button" className="text-bt_col px-2 text-lg hover:text-orange-600">&#10095;</button>
               </div>
-               {change ? (<CategoryIncome/>) : (<Category/>)}
+            {change ? (<CategoryIncome categoryData={getCategoryData} />) : (<Category categoryData={getCategoryData}/>)}
                
                 </section>
                <section className="h-[368px] relative z-20 mt-8 py-5 tab:px-9 desk:px-0  bg-white tab:rounded-[30px]  tab:shadow-shadow">

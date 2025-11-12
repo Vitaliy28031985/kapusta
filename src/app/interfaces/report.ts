@@ -15,3 +15,7 @@ export interface DataCategory {
   sum: number
 }
 
+export interface CategoryProps {
+  categoryData: (category: string) => void;
+}
+
