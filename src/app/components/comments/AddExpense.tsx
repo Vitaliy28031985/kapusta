@@ -3,12 +3,29 @@
 import { addExpense } from "@/actions/addExpense";
 import {category} from '../../../db/categoryExpenses';
 import AddExpenseProps from "@/app/interfaces/addExpense";
+import { useAuthStore } from "@/store/auth.store";
 
  
 const AddExpense: React.FC<AddExpenseProps> = ({ isShowAdd }: AddExpenseProps) => {
+
+    const { session } = useAuthStore();
+    
+    const userId = session?.user?.id;
+
+   
+
     const onSubmit = async (formData: FormData) => { 
+          if (userId) {
+        formData.append("id", userId);
+    }
         const data = await addExpense(formData);
-        console.log(data);
+
+        if (data.status !== 'error') {
+            console.log("successfully", data.message)
+        } else {
+           console.log("Error" ,data.message);  
+        }
+       
         isShowAdd();
     }
     return (

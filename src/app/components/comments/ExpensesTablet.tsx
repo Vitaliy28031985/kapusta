@@ -3,10 +3,11 @@
 import { useState, useRef, useEffect } from 'react';
 import { FaRegTrashCan } from 'react-icons/fa6';
 import { BsFeather } from 'react-icons/bs';
-import data from '../../../db/expenses.json';
 import AddExpense from './AddExpense';
+import { ExpensesProps } from '@/app/interfaces/comments';
+import { formatDate } from '@/utils/date-convector';
 
-const ExpensesTablet = () => {
+const ExpensesTablet = ({data}: ExpensesProps) => {
   const [add, setAdd] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const addRef = useRef<HTMLDivElement | null>(null);
@@ -36,9 +37,9 @@ const ExpensesTablet = () => {
           ref={scrollContainerRef}
           className="overflow-y-auto max-h-[300px] scrollbar-bt_col"
         >
-          {data?.expenses?.map(({ id, date, description, category, sum }) => (
-            <div key={id} className="flex items-center py-1 mx-[2px] mb-[2px] bg-white shadow-shadow_menu">
-              <div className="tab:w-[116px] desk:w-[136px] text-center text-sx text-text_op">{date}</div>
+          {data?.map(({ _id, date, description, category, sum }) => (
+            <div key={_id.toString()} className="flex items-center py-1 mx-[2px] mb-[2px] bg-white shadow-shadow_menu">
+              <div className="tab:w-[116px] desk:w-[136px] text-center text-sx text-text_op">{formatDate(date.toString())}</div>
               <div className="tab:w-[190px] desk:w-[221px] text-sx text-text_op">{description}</div>
               <div className="tab:w-[156px] desk:w-[179px] text-center text-sx text-text_op">{category}</div>
               <div className="tab:w-[105px] desk:w-[105px] text-center text-sx text-red_color">{`- ${sum} UAN.`}</div>

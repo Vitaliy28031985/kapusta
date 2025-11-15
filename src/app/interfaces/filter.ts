@@ -5,6 +5,7 @@ export interface Data {
   description: string;
   category: string;
   sum: string;
+  action: boolean;
 }
 
 export interface FilterProps { 
@@ -16,5 +17,6 @@ export interface FilterProps {
     date: new Date(),
     description: '',
     category: '',
-    sum: ''
+   sum: '',
+    action: false,
 }

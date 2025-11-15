@@ -56,7 +56,7 @@ const FilterMobile = ({ filterData, category }: FilterProps) => {
     
     const clear = () => {
         setData(defaultData);
-        filterData(data);
+        filterData(defaultData);
     }
       
       

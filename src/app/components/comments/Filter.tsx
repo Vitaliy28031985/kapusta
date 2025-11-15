@@ -4,7 +4,6 @@ import { useRef, useState } from "react";
 import { FaRegCalendarDays } from 'react-icons/fa6';
 import { FaAngleDown } from 'react-icons/fa';
 import { FaCalculator } from 'react-icons/fa';
-// import categories from '../../../db/category.json';
 import { Data, defaultData, FilterProps } from "@/app/interfaces/filter";
 
 
@@ -55,10 +54,14 @@ const Filter = ({filterData, category}: FilterProps) => {
   
 const submit = (e: React.FormEvent<HTMLFormElement>) => {
   e.preventDefault();
-  filterData(data)
+
+  filterData({ ...data, action: true });
 };
 
-  const clear = () => setData(defaultData);
+  const clear = () => {
+    filterData(defaultData);
+    setData(defaultData);
+  };
   
   
 

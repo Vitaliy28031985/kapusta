@@ -2,21 +2,41 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaChartSimple } from 'react-icons/fa6';
 import Expenses from "./Expenses";
 import ExpensesMobile from "./ExpensesMobile";
 import Income from "./Income";
 import IncomeMobile from "./IncomeMobile";
+import { useAuthStore } from "@/store/auth.store";
+
+import { useExpenseStore } from "@/store/expenses-store";
+
 
 const CommentsContainer = () => {
-const [toggle, setToggle] = useState(false);
+
+
+    const { session} = useAuthStore();
+    const [toggle, setToggle] = useState(false);
     const [name, setName] = useState('expenses');
-    // useEffect(() => {window.location.href = "/comment";}, [])
+   
+
+    const { data, fetchExpenses } = useExpenseStore();
+
+ 
     
-    //  window.location.href = "/comment";
+   useEffect(() => {
+        if (session?.user?.id) {
+            fetchExpenses(session.user.id);
+        }
+    }, [session?.user?.id]);
+        
+  
+    
   
     const onToggle = () => setToggle(toggle => !toggle);
+
+    
 
     return (
     <main className="relative min-h-screen">
@@ -70,7 +90,7 @@ const [toggle, setToggle] = useState(false);
                     {name === 'expenses' ? (
                 <div>
                    <div className="mob:hidden tab:block">
-                   <Expenses/>
+                   <Expenses data={data ?? []} />
                    </div>
                     <div className="tab:hidden"><ExpensesMobile onToggle={onToggle} toggle={toggle} /></div>         
                 </div>
@@ -155,3 +175,4 @@ const [toggle, setToggle] = useState(false);
 }
 
 export default CommentsContainer;
+
