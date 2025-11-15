@@ -1,5 +1,5 @@
 'use server'
-import bcrypt from "bcryptjs";
+
 import { connectToDatabase } from "@/lib/mongodb";
 import { User } from "@/models/User";
 import { saltAndHahsPassword } from "@/utils/password";

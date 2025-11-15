@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaChartSimple } from 'react-icons/fa6';
 import Expenses from "./Expenses";
 import ExpensesMobile from "./ExpensesMobile";

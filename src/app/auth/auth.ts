@@ -39,6 +39,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                  emailVerified: null,
                };
              } catch (err) {
+                console.error("error:", err);
                return null;
              }
            },
