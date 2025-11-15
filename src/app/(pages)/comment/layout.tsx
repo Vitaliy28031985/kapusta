@@ -1,3 +1,6 @@
+
+
+// import PrivateLoader from "@/hoc/private-loader";
 import type { Metadata } from "next";
 
 
@@ -12,5 +15,6 @@ export default function CommentLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-   return <>{children}</>;
+ 
+   return (<>{children}</>) ;
 }

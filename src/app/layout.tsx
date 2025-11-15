@@ -1,7 +1,9 @@
+
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Header from "./components/Header";
+import { auth } from "@/app/auth/auth";
+import ClientWrapper from "./ClientWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,16 +20,29 @@ export const metadata: Metadata = {
   description: "Smart Finance",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
-}) {
-  return (
+  }) {
+  const session = await auth()
+  // return (
+  //   <SessionProvider session={session}>
+  //     <AppLoader>
+  //   <html lang="en">
+  //     <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+  //       <Header />
+  //       {children}
+  //     </body>
+  //       </html>
+  //     </AppLoader>
+  //   </SessionProvider>
+  // );
+
+   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <Header />
-        {children}
+        <ClientWrapper session={session}>{children}</ClientWrapper>
       </body>
     </html>
   );

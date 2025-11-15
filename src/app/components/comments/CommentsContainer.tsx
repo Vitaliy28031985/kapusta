@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaChartSimple } from 'react-icons/fa6';
 import Expenses from "./Expenses";
 import ExpensesMobile from "./ExpensesMobile";
@@ -11,7 +11,10 @@ import IncomeMobile from "./IncomeMobile";
 
 const CommentsContainer = () => {
 const [toggle, setToggle] = useState(false);
-const [name, setName] = useState('expenses');
+    const [name, setName] = useState('expenses');
+    // useEffect(() => {window.location.href = "/comment";}, [])
+    
+    //  window.location.href = "/comment";
   
     const onToggle = () => setToggle(toggle => !toggle);
 

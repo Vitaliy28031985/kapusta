@@ -2,13 +2,19 @@
 import { authorization } from "@/actions/authorization";
 import Image from "next/image";
 
-import { useState } from "react";
+import {  useState } from "react";
 import Login from "./login";
 import Register from "./Register";
+import { register } from "@/actions/register";
+import { signInWithCredentials } from "@/actions/sign-in";
+
 
 
 
 const FormContainer = () => {
+
+    
+
     const [chang, setChang] = useState(false);
     const [input, setInput] = useState<{ userName: string; email: string; password: string; confirmPassword: string; check: boolean }>({
         userName: '',
@@ -68,8 +74,8 @@ const FormContainer = () => {
                 return;
             }
 
-          
-            console.log(data?.userName?.toString() )
+         const singUp = await register({userName: receivedData.userName, email: receivedData.email, password: receivedData.password})
+           console.log(singUp) 
         }
 
         if (
@@ -78,9 +84,11 @@ const FormContainer = () => {
         ) {
             alert("All fields must be filled in!");
                 return;
-            }
-        
-        
+        }
+       const result = await signInWithCredentials(receivedData.email, receivedData.password);
+        console.log(result)
+
+        window.location.assign("/comment");
     }
     
     return (
