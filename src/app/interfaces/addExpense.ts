@@ -1,3 +1,4 @@
 export default interface AddExpenseProps {
-    isShowAdd: () => void
+    isShowAdd: () => void;
+    onToggle?: () => void;
 }

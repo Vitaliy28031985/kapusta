@@ -22,7 +22,7 @@ const summary: SummaryItem[] = [
 
 
 
-const Expenses = ({ data }: ExpensesProps) => {
+const Expenses = ({ data, onToggle }: ExpensesProps) => {
     const [expensesData, setExpensesData] = useState<IComment[]>(data);
 
    
@@ -47,7 +47,7 @@ const Expenses = ({ data }: ExpensesProps) => {
         <div className="z-50 tab:w-[704px] desk:w-[1098px] tab:h-[616px] desk:h-[579px] tab:pt-6 desk:pt-8 tab:pb-[42px] desk:pb-[61px] tab:px-10 desk:px-8  bg-white relative tab:left-[32px]  desk:left-[91px] rounded-r-[16px] rounded-bl-[16px] shadow-shadow">
             <Filter category={category} filterData={getFilterData} />
             <div className="desk:flex items-start gap-[75px]">
-                <ExpensesTablet data={expensesData.length === 0 ? data : expensesData}/>
+                <ExpensesTablet onToggle={onToggle} data={expensesData.length === 0 ? data : expensesData}/>
                 <Months summary={summary} />   
             </div>
             

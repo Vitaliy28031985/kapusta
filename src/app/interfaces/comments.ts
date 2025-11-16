@@ -16,5 +16,6 @@ export interface IComment {
 }
 
 export interface ExpensesProps {
+    onToggle?: () => void;
     data: IComment[];
 }

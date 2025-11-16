@@ -6,7 +6,7 @@ import AddExpenseProps from "@/app/interfaces/addExpense";
 import { useAuthStore } from "@/store/auth.store";
 
  
-const AddExpense: React.FC<AddExpenseProps> = ({ isShowAdd }: AddExpenseProps) => {
+const AddExpense: React.FC<AddExpenseProps> = ({ isShowAdd, onToggle }: AddExpenseProps) => {
 
     const { session } = useAuthStore();
     
@@ -23,10 +23,12 @@ const AddExpense: React.FC<AddExpenseProps> = ({ isShowAdd }: AddExpenseProps) =
         if (data.status !== 'error') {
             console.log("successfully", data.message)
         } else {
-           console.log("Error" ,data.message);  
+           console.log("Error", data.message);  
         }
        
         isShowAdd();
+        if(onToggle)
+        onToggle();
     }
     return (
 <form action={onSubmit}>

@@ -29,12 +29,17 @@ const CommentsContainer = () => {
         if (session?.user?.id) {
             fetchExpenses(session.user.id);
         }
-    }, [session?.user?.id]);
+    }, [session?.user?.id, toggle]);
         
   
     
   
     const onToggle = () => setToggle(toggle => !toggle);
+
+
+    
+
+
 
     
 
@@ -90,7 +95,7 @@ const CommentsContainer = () => {
                     {name === 'expenses' ? (
                 <div>
                    <div className="mob:hidden tab:block">
-                   <Expenses data={data ?? []} />
+                   <Expenses data={data ?? []} onToggle={onToggle} />
                    </div>
                     <div className="tab:hidden"><ExpensesMobile onToggle={onToggle} toggle={toggle} /></div>         
                 </div>
