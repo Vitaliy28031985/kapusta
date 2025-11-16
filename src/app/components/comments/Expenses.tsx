@@ -11,18 +11,11 @@ import { ExpensesProps, IComment } from "@/app/interfaces/comments";
 import { getFilterDataItems } from "@/utils/filter-data";
 
 
-const summary: SummaryItem[] = [
-    { id: 1, month: 'November', sum: 10000.00 },
-    { id: 2, month: 'October', sum: 30000.00 },
-    { id: 3, month: 'September', sum: 30000.00 },
-    { id: 4, month: 'August', sum: 20000.00 },
-    { id: 5, month: 'July', sum: 15000.00 },
-    { id: 6, month: 'June', sum: 18000.00 }
-]
 
 
 
-const Expenses = ({ data, onToggle }: ExpensesProps) => {
+
+const Expenses = ({ data, onToggle, summary }: ExpensesProps) => {
     const [expensesData, setExpensesData] = useState<IComment[]>(data);
 
    
@@ -48,7 +41,7 @@ const Expenses = ({ data, onToggle }: ExpensesProps) => {
             <Filter category={category} filterData={getFilterData} />
             <div className="desk:flex items-start gap-[75px]">
                 <ExpensesTablet onToggle={onToggle} data={expensesData.length === 0 ? data : expensesData}/>
-                <Months summary={summary} />   
+                <Months summary={summary ?? []} />   
             </div>
             
         </div>

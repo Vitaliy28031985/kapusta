@@ -11,6 +11,7 @@ import IncomeMobile from "./IncomeMobile";
 import { useAuthStore } from "@/store/auth.store";
 
 import { useExpenseStore } from "@/store/expenses-store";
+import { generatorOfGeneralizationByMonths } from "@/utils/expense/generator-of-generalization-by-months";
 
 
 const CommentsContainer = () => {
@@ -28,17 +29,14 @@ const CommentsContainer = () => {
    useEffect(() => {
         if (session?.user?.id) {
             fetchExpenses(session.user.id);
-        }
+       }
+         
     }, [session?.user?.id, toggle]);
         
-  
-    
+
+       const summary = generatorOfGeneralizationByMonths(data)  
   
     const onToggle = () => setToggle(toggle => !toggle);
-
-
-    
-
 
 
     
@@ -95,7 +93,7 @@ const CommentsContainer = () => {
                     {name === 'expenses' ? (
                 <div>
                    <div className="mob:hidden tab:block">
-                   <Expenses data={data ?? []} onToggle={onToggle} />
+                   <Expenses summary={summary} data={data ?? []} onToggle={onToggle} />
                    </div>
                     <div className="tab:hidden"><ExpensesMobile onToggle={onToggle} toggle={toggle} /></div>         
                 </div>
