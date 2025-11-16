@@ -43,10 +43,10 @@ export const updateExpense = async (dto:
     
         return { status: "success", message: "Expense successfully updated!" }; 
         
-    }catch (error) {
+    } catch (error) {
         console.error("Error during updating:", error);
         return { status: "error", message: "An error occurred during updating!" };
-  }
+    }
     
 
 

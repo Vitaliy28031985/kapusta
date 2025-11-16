@@ -10,6 +10,7 @@ import { useExpenseStore } from '@/store/expenses-store';
 import { category as categoryDb } from '../../../db/categoryExpenses';
 import { useAuthStore } from '@/store/auth.store';
 import { updateExpense } from '@/actions/updateExpense';
+import { deleteExpense } from '@/actions/deleteExpense';
 
 
 const ExpensesTablet = ({ data, onToggle }: ExpensesProps) => {
@@ -114,13 +115,25 @@ const {
               </>)}
               
               <div className="flex justify-center items-center tab:w-[105px] desk:w-[105px] gap-2 py-1">
-                <button onClick={() => onDeleteToggle(_id.toString(), isDelete  ?? false)} className="flex justify-center items-center text-text_color w-8 h-8 hover:bg-bg_fon rounded-full" type="button">
+                <button onClick={async () => {
+                  onDeleteToggle(_id.toString(), isDelete ?? false);
+                  const resultDelete = await deleteExpense(_id.toString(), userId ?? '');
+                   if (resultDelete.status !== 'error') {
+                    console.log("successfully", resultDelete.message)
+                    
+                  } else {
+                  console.log("Error", resultDelete.message);  
+                   }
+                 if(onToggle)
+                 onToggle();
+                }}
+                  className="flex justify-center items-center text-text_color w-8 h-8 hover:bg-bg_fon rounded-full" type="button">
                   <FaRegTrashCan className="size-[18px]" />
                 </button>
                 <button onClick={async () => {
                   onUpdateToggle(_id.toString(), isShow ?? false)
                   if (isShow) {
-                  if (isShow && userId) {  // <-- перевіряємо, що userId існує
+                  if (isShow && userId) {
                   const newExpense = {
                    id: _id.toString(),
                    date: parseDate(date.toString()),
