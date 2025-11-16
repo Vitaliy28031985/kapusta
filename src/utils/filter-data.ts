@@ -26,8 +26,10 @@ export const getFilterDataItems = (data: IComment[], filterData: Data): IComment
       : false;
 
     const categoryMatch = filterData.category
-      ? category === filterData.category
+      ? category.toLocaleLowerCase() === filterData.category.toLocaleLowerCase()
       : false;
+    
+   
 
     const sumMatch = filterData.sum
       ? sum === Number(filterData.sum)
@@ -39,7 +41,7 @@ export const getFilterDataItems = (data: IComment[], filterData: Data): IComment
 };
 
 
-    
+
 
 
 

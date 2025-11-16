@@ -11,7 +11,7 @@ import IncomeMobile from "./IncomeMobile";
 import { useAuthStore } from "@/store/auth.store";
 
 import { useExpenseStore } from "@/store/expenses-store";
-import { generatorOfGeneralizationByMonths } from "@/utils/expense/generator-of-generalization-by-months";
+import { generatorOfGeneralizationByMonths } from "@/utils/generator-of-generalization-by-months";
 
 
 const CommentsContainer = () => {

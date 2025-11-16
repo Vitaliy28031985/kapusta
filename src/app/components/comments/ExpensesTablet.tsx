@@ -136,12 +136,14 @@ const {
                   if (isShow && userId) {
                   const newExpense = {
                    id: _id.toString(),
-                   date: parseDate(date.toString()),
+                   date: new Date(date),
                    description,
                    category,
                    sum: Number(sum),
                    userId, 
                     };
+
+                    
                   const resultUpdate = await updateExpense(newExpense);
                   if (resultUpdate.status !== 'error') {
                     console.log("successfully", resultUpdate.message)

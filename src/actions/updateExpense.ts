@@ -8,9 +8,9 @@ import { Expense } from "@/models/Expense";
 export const updateExpense = async (dto:
     { id: string; date: Date; description: string, category: string, sum: number, userId: string }) => {
   
-   
     const _id = new mongoose.Types.ObjectId(dto.id.toString());
     const date = dto.date ? new Date(dto.date) : null;
+   
     if (!date || isNaN(date.getTime())) {
     return { status: "error", message: "Invalid date provided!" };
   
@@ -22,7 +22,7 @@ export const updateExpense = async (dto:
         category: dto.category,
         sum: dto.sum
     }
-
+    
 
     await connectToDatabase();
 
