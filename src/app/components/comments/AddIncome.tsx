@@ -3,13 +3,30 @@
 import { addIncome } from "@/actions/addIncome";
 import AddExpenseProps from "@/app/interfaces/addExpense";
 import {category} from '../../../db/categoryIncome';
+import { useAuthStore } from "@/store/auth.store";
 
  
-const AddIncome: React.FC<AddExpenseProps> = ({ isShowAdd }: AddExpenseProps) => {
+const AddIncome: React.FC<AddExpenseProps> = ({ isShowAdd, onToggle }: AddExpenseProps) => {
+    
+     const { session } = useAuthStore();
+        
+        const userId = session?.user?.id;
+    
     const onSubmit = async (formData: FormData) => { 
+    if (userId) {
+        formData.append("id", userId);
+    }
         const data = await addIncome(formData);
-         console.log(data);
+        
+         if (data.status !== 'error') {
+            console.log("successfully", data.message)
+        } else {
+           console.log("Error", data.message);  
+        }
+       
         isShowAdd();
+        if(onToggle)
+        onToggle();
     }
     return (
 <form action={onSubmit}>

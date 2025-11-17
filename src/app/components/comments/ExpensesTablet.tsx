@@ -5,7 +5,7 @@ import { FaRegTrashCan } from 'react-icons/fa6';
 import { BsFeather } from 'react-icons/bs';
 import AddExpense from './AddExpense';
 import { ExpensesProps } from '@/app/interfaces/comments';
-import { formatDate, parseDate, toInputDate } from '@/utils/date-convector';
+import { formatDate, toInputDate } from '@/utils/date-convector';
 import { useExpenseStore } from '@/store/expenses-store';
 import { category as categoryDb } from '../../../db/categoryExpenses';
 import { useAuthStore } from '@/store/auth.store';

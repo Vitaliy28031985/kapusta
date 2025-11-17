@@ -4,9 +4,10 @@ import { FaRegTrashCan } from 'react-icons/fa6';
 import { BsFeather } from 'react-icons/bs';
 import income from '../../../db/income.json'
 import AddIncome from './AddIncome';
+import { ExpensesProps } from '@/app/interfaces/comments';
 
 
-const IncomesTablet = () => {
+const IncomesTablet = ({ data, onToggle }: ExpensesProps) => {
   const [add, setAdd] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const addRef = useRef<HTMLDivElement | null>(null);
@@ -56,7 +57,7 @@ const IncomesTablet = () => {
          
           {add && (
             <div ref={addRef}>
-              <AddIncome isShowAdd={isShowAdd} />
+              <AddIncome isShowAdd={isShowAdd} onToggle={onToggle} />
             </div>
           )}
         </div>

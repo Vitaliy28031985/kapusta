@@ -12,6 +12,8 @@ import { useAuthStore } from "@/store/auth.store";
 
 import { useExpenseStore } from "@/store/expenses-store";
 import { generatorOfGeneralizationByMonths } from "@/utils/generator-of-generalization-by-months";
+import { useIncomeStore } from "@/store/incomes-store";
+import { getBalance } from "@/utils/get-balance";
 
 
 const CommentsContainer = () => {
@@ -24,11 +26,14 @@ const CommentsContainer = () => {
 
     const { data, fetchExpenses } = useExpenseStore();
 
+    const {data: incomes, fetchIncomes} = useIncomeStore()
+
  
     
    useEffect(() => {
         if (session?.user?.id) {
             fetchExpenses(session.user.id);
+            fetchIncomes(session.user.id)
        }
          
     }, [session?.user?.id, toggle]);
@@ -49,8 +54,8 @@ const CommentsContainer = () => {
                 <div className="mob:hidden tab:flex items-center   tab:gap-[251px] desk:gap-[298px] tab:ml-[32px] desk:ml-[473px]">
                     <div className="flex gap-5 items-center">
                     <p className="text-sx font-medium text-text_color">Balance:</p>
-                    <div className="w-32 py-3 pr-5 pl-2 border-2 border-white rounded-[16px]">
-                        <p className="text-sx font-bold text-end">00.00 UAH</p>
+                    <div className="py-3 pr-5 pl-2 border-2 border-white rounded-[16px]">
+                        <p className="text-sx font-bold text-end">{`${getBalance(data, incomes).toFixed(2)} UAH`}</p>
                     </div>
                     <button className="w-[125px] py-3 px-[6px] border-2 border-white rounded-[16px] text-center text-text_color text-sx font-normal hover:text-text_op" type="button">CONFIRM</button>
                     </div>
@@ -99,7 +104,7 @@ const CommentsContainer = () => {
                 </div>
                     ) : (
                             <div>
-                                <div className="mob:hidden tab:block"><Income /></div>
+                                <div className="mob:hidden tab:block"><Income data={data ?? []} onToggle={onToggle} /></div>
                                 <div className="tab:hidden"><IncomeMobile onToggle={onToggle} toggle={toggle} /></div>
                             </div>
                     )}

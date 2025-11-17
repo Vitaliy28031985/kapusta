@@ -5,7 +5,6 @@ import Filter from "./Filter";
 import { Data, defaultData } from "@/app/interfaces/filter";
 import ExpensesTablet from "./ExpensesTablet";
 import Months from "./Months";
-import { SummaryItem } from "@/app/interfaces/months";
 import { category } from "@/db/categoryExpenses";
 import { ExpensesProps, IComment } from "@/app/interfaces/comments";
 import { getFilterDataItems } from "@/utils/filter-data";

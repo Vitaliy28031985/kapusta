@@ -35,6 +35,7 @@ export const getFilterDataItems = (data: IComment[], filterData: Data): IComment
       ? sum === Number(filterData.sum)
       : false;
 
+    
    
     return dateMatch || descriptionMatch || categoryMatch || sumMatch;
   });
