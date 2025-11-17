@@ -47,7 +47,7 @@ const FilterMobile = ({ filterData, category }: FilterProps) => {
       const formattedDate =
       data.date instanceof Date
         ? data.date.toISOString().split('T')[0]
-          : data.date;
+          : data.date ?? '';
       
     const submit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
