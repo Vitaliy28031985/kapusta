@@ -15,7 +15,7 @@ import { getFilterDataItems } from "@/utils/filter-data";
 
 
 const Expenses = ({ data, onToggle, summary }: ExpensesProps) => {
-    const [expensesData, setExpensesData] = useState<IComment[]>(data);
+    const [expensesData, setExpensesData] = useState<IComment[]>(data ?? []);
 
    
     const [filterData, setFilterData] = useState<Data>(defaultData);
@@ -23,9 +23,9 @@ const Expenses = ({ data, onToggle, summary }: ExpensesProps) => {
 
     useEffect(() => {
         if (filterData.action) {
-            setExpensesData(getFilterDataItems(data, filterData))
+            setExpensesData(getFilterDataItems(data ?? [], filterData))
         } else {
-            setExpensesData(data)
+            setExpensesData(data ?? [])
         }
     }, [filterData])
 
