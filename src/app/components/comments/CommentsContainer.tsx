@@ -21,13 +21,17 @@ const CommentsContainer = () => {
 
     const { session} = useAuthStore();
     const [toggle, setToggle] = useState(false);
+
     const [name, setName] = useState('expenses');
-   
+  
+    const [showFilter, setShowFilter] = useState(false);
 
     const { data, fetchExpenses } = useExpenseStore();
 
     const {data: incomes, fetchIncomes} = useIncomeStore()
+   
 
+    const isShowFilter = () => setShowFilter(filter => !filter);
  
     
    useEffect(() => {
@@ -48,7 +52,7 @@ const CommentsContainer = () => {
 
     return (
     <main className="relative min-h-screen">
-            <div className={!toggle ? "relative pt-10 mob:h-[296px] tab:h-[526px]  bg-bg_fon mob:rounded-bl-[140px] tab:rounded-bl-[60px]  mob:w-[320px] tab:w-[768px] desk:w-[1280px] mx-auto" : "relative pt-10 mob:h-[526px] tab:h-[526px]  bg-bg_fon mob:rounded-bl-[140px] tab:rounded-bl-[60px]  mob:w-[320px] tab:w-[768px] desk:w-[1280px] mx-auto"}>
+            <div className={!showFilter ? "relative pt-10 mob:h-[296px] tab:h-[526px]  bg-bg_fon mob:rounded-bl-[140px] tab:rounded-bl-[60px]  mob:w-[320px] tab:w-[768px] desk:w-[1280px] mx-auto" : "relative pt-10 mob:h-[526px] tab:h-[526px]  bg-bg_fon mob:rounded-bl-[140px] tab:rounded-bl-[60px]  mob:w-[320px] tab:w-[768px] desk:w-[1280px] mx-auto"}>
                 
                {/* header */}
                 <div className="mob:hidden tab:flex items-center   tab:gap-[251px] desk:gap-[298px] tab:ml-[32px] desk:ml-[473px]">
@@ -100,12 +104,12 @@ const CommentsContainer = () => {
                    <div className="mob:hidden tab:block">
                    <Expenses summary={summary} data={data ?? []} onToggle={onToggle} />
                    </div>
-                    <div className="tab:hidden"><ExpensesMobile onToggle={onToggle} toggle={toggle} /></div>         
+                    <div className="tab:hidden"><ExpensesMobile showFilter={showFilter} isShowFilter={isShowFilter}  data={data} onToggle={onToggle} toggle={toggle} /></div>         
                 </div>
                     ) : (
                             <div>
                                 <div className="mob:hidden tab:block"><Income data={data ?? []} onToggle={onToggle} /></div>
-                                <div className="tab:hidden"><IncomeMobile onToggle={onToggle} toggle={toggle} /></div>
+                                <div className="tab:hidden"><IncomeMobile  onToggle={onToggle} toggle={toggle} /></div>
                             </div>
                     )}
             </div>   

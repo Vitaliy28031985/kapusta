@@ -38,17 +38,16 @@ const {
   }, [add]);
 
 
-   // 🗑 Видалення (показати confirm)
+  
   const onDeleteToggle = (id: string, current: boolean) => {
     addIsToggle(id, !current, "delete");
   };
 
-  // ✏ Редагування (показати форму)
+  
   const onUpdateToggle = (id: string, current: boolean) => {
     addIsToggle(id, !current, "update");
   };
 
-  // 📝 Обробка змін в інпуті
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     updateField(e.target.id, e.target.name, e.target.value);
   };
@@ -141,9 +140,7 @@ const {
                    category,
                    sum: Number(sum),
                    userId, 
-                    };
-
-                    
+                    };                   
                   const resultUpdate = await updateExpense(newExpense);
                   if (resultUpdate.status !== 'error') {
                     console.log("successfully", resultUpdate.message)
@@ -153,12 +150,9 @@ const {
                    }
                  if(onToggle)
                  onToggle();
+                  }    
                   }
-                     
-                  }
-                  
-                }  
-                } className="flex justify-center items-center text-text_color w-8 h-8 hover:bg-bg_fon rounded-full" type="button">
+                  }} className="flex justify-center items-center text-text_color w-8 h-8 hover:bg-bg_fon rounded-full" type="button">
                   <BsFeather className="size-[18px]" />
                 </button>
               </div>
@@ -187,4 +181,4 @@ const {
 
 export default ExpensesTablet;
 
-
+ 

@@ -4,9 +4,14 @@ import { AiOutlineClose } from 'react-icons/ai';
 import AddExpenseProps from "@/app/interfaces/addExpense";
 import {category} from '../../../db/categoryExpenses';
 import { addExpense } from "@/actions/addExpense";
+import { useAuthStore } from "@/store/auth.store";
 
 
-const AddExpenseModule = ({ isShowAdd }: AddExpenseProps) => {
+const AddExpenseModule = ({ isShowAdd, onToggle  }: AddExpenseProps) => {
+
+  const { session } = useAuthStore();
+      
+      const userId = session?.user?.id;
 
 
     useEffect(() => {
@@ -30,10 +35,21 @@ const AddExpenseModule = ({ isShowAdd }: AddExpenseProps) => {
 };
 
 
-    const onSubmit = async (formData: FormData) => { 
-      const data = await addExpense(formData);
-       console.log(data);
+   const onSubmit = async (formData: FormData) => { 
+          if (userId) {
+        formData.append("id", userId);
+    }
+        const data = await addExpense(formData);
+
+        if (data.status !== 'error') {
+            console.log("successfully", data.message)
+        } else {
+           console.log("Error", data.message);  
+        }
+       
         isShowAdd();
+        if(onToggle)
+        onToggle();
     }
 
 return (
