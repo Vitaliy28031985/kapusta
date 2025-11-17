@@ -14,7 +14,7 @@ const IncomesTablet = ({ data, onToggle }: ExpensesProps) => {
 
   const isShowAdd = () => setAdd(prev => !prev);
 
-  
+  console.log(data)
   useEffect(() => {
     if (add && scrollContainerRef.current && addRef.current) {
          addRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });

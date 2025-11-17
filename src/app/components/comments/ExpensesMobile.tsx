@@ -20,7 +20,7 @@ const ExpensesMobile = ({onToggle, toggle}: Expenses) => {
             setFilterData(data);
         }
     
-        // console.log(filterData)
+        console.log(filterData)
 
     // const onToggle = () => setToggle(toggle => !toggle);
     return (

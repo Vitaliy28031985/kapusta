@@ -12,7 +12,7 @@ interface IncomesState {
         name: 'update' | 'delete'
     ) => void;
 
-    updateField: (id: string, name: string, value: any) => void;
+    updateField: (id: string, name: string, value: string) => void;
 
     addLocalExpense: (exp: IComment) => void;
 }
