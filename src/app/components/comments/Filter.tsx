@@ -11,6 +11,7 @@ import { Data, defaultData, FilterProps } from "@/app/interfaces/filter";
 const Filter = ({filterData, category}: FilterProps) => {
   const [data, setData] = useState<Data>(defaultData);
   const [showMenu, setShowMenu] = useState(false);
+  const [changeDate, setChangeDate] = useState(false);
 
   const isShowMenu = () => setShowMenu(toggle => !toggle);
   
@@ -21,7 +22,8 @@ const Filter = ({filterData, category}: FilterProps) => {
         const {name, value,} = e.currentTarget;
         switch (name) {
           
-           case 'date':
+          case 'date':
+            setChangeDate(true);
             setData({ ...data, date: new Date(value) });
             break;
             case 'description':
@@ -50,17 +52,22 @@ const Filter = ({filterData, category}: FilterProps) => {
   const formattedDate =
   data.date instanceof Date
     ? data.date.toISOString().split('T')[0]
-      : data.date;
+    : data.date ?? '';
   
 const submit = (e: React.FormEvent<HTMLFormElement>) => {
   e.preventDefault();
-
-  filterData({ ...data, action: true });
+  if (changeDate) {
+   filterData({ ...data, action: true });
+  } else {
+    filterData({ ...data, action: true, date: null });
+ }
+  
 };
 
   const clear = () => {
     filterData(defaultData);
     setData(defaultData);
+    setChangeDate(false);
   };
   
   

@@ -1,7 +1,7 @@
 import { DataCategory } from "./report";
 
 export interface Data {
-  date: Date;
+  date: Date | null;
   description: string;
   category: string;
   sum: string;
