@@ -4,16 +4,19 @@ import { FaRegTrashCan } from 'react-icons/fa6';
 import { BsFeather } from 'react-icons/bs';
 import { category as categoryDb } from '../../../db/categoryIncome';
 import AddIncome from './AddIncome';
-import { ExpensesProps, IComment } from '@/app/interfaces/comments';
+import { ExpensesProps} from '@/app/interfaces/comments';
 import { useIncomeStore } from '@/store/incomes-store';
 import { useAuthStore } from '@/store/auth.store';
 import { formatDate, toInputDate } from '@/utils/date-convector';
+import { updateIncome } from '@/actions/updateIncome';
+import { deleteIncome } from '@/actions/deleteIncome';
 
 
 const IncomesTablet = ({ onToggle, filterData }: ExpensesProps) => {
   const { session} = useAuthStore();
   const {data, fetchIncomes, addIsToggle, updateField,} = useIncomeStore()
   const [add, setAdd] = useState(false);
+  const [render, setRender] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const addRef = useRef<HTMLDivElement | null>(null);
 
@@ -24,9 +27,10 @@ const IncomesTablet = ({ onToggle, filterData }: ExpensesProps) => {
          fetchIncomes(userId, filterData)
        }
          
-    }, [userId, filterData]);
+    }, [userId, filterData, render, add]);
 
   const isShowAdd = () => setAdd(prev => !prev);
+  const isRender = () => setRender(prev => !prev);
 
      
   
@@ -110,7 +114,19 @@ const IncomesTablet = ({ onToggle, filterData }: ExpensesProps) => {
               <div className="tab:w-[105px] desk:w-[105px] text-center text-sx text-green">{`${sum} UAN.`}</div></>)}
               
               <div className="flex justify-center items-center tab:w-[105px] desk:w-[105px] gap-2 py-1">
-                <button className="flex justify-center items-center text-text_color w-8 h-8 hover:bg-bg_fon rounded-full" type="button">
+                <button onClick={async () => {
+                 onDeleteToggle(_id.toString(), isDelete ?? false);
+                const resultDelete = await deleteIncome(_id.toString(), userId ?? '');
+                  if (resultDelete.status !== 'error') {
+                  console.log("successfully", resultDelete.message)
+                                    
+                } else {
+                console.log("Error", resultDelete.message);  
+                  }
+                  isRender()
+                if(onToggle)
+                onToggle();
+              }} className="flex justify-center items-center text-text_color w-8 h-8 hover:bg-bg_fon rounded-full" type="button">
                   <FaRegTrashCan className="size-[18px]" />
                 </button>
                 <button onClick={async () => {
@@ -125,13 +141,14 @@ const IncomesTablet = ({ onToggle, filterData }: ExpensesProps) => {
                                    sum: Number(sum),
                                    userId, 
                                     };                   
-                                  // const resultUpdate = await updateExpense(newIncome);
-                                  // if (resultUpdate.status !== 'error') {
-                                  //   console.log("successfully", resultUpdate.message)
+                                  const resultUpdate = await updateIncome(newIncome);
+                                  if (resultUpdate.status !== 'error') {
+                                    console.log("successfully", resultUpdate.message)
                                     
-                                  // } else {
-                                  // console.log("Error", resultUpdate.message);  
-                                  //  }
+                                  } else {
+                                  console.log("Error", resultUpdate.message);  
+                                   }
+                                  isRender();
                                  if(onToggle)
                                  onToggle();
                                   }    
