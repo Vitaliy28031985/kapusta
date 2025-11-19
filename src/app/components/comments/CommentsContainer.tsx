@@ -44,7 +44,9 @@ const CommentsContainer = () => {
     }, [session?.user?.id, toggle]);
         
 
-       const summary = generatorOfGeneralizationByMonths(data)  
+    const summaryExpenses = generatorOfGeneralizationByMonths(data); 
+    const summaryIncomes = generatorOfGeneralizationByMonths(incomes);
+    
   
     const onToggle = () => setToggle(toggle => !toggle);
 
@@ -103,13 +105,13 @@ const CommentsContainer = () => {
                     {name === 'expenses' ? (
                 <div>
                    <div className="mob:hidden tab:block">
-                   <Expenses summary={summary} data={data ?? []} onToggle={onToggle} />
+                   <Expenses summary={summaryExpenses} data={data ?? []} onToggle={onToggle} />
                    </div>
                     <div className="tab:hidden"><ExpensesMobile showFilter={showFilter} isShowFilter={isShowFilter}  data={data} onToggle={onToggle} toggle={toggle} /></div>         
                 </div>
                     ) : (
                             <div>
-                                <div className="mob:hidden tab:block"><Income data={data ?? []} onToggle={onToggle} /></div>
+                                <div className="mob:hidden tab:block"><Income summary={summaryIncomes} onToggle={onToggle} /></div>
                                 <div className="tab:hidden"><IncomeMobile  onToggle={onToggle} toggle={toggle} /></div>
                             </div>
                     )}
