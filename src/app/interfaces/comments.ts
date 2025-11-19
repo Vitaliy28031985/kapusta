@@ -1,5 +1,6 @@
-import { ObjectId } from "mongoose";
+import { ObjectId, Types } from "mongoose";
 import { SummaryItem } from "./months";
+import { Data } from "./filter";
 
 export interface IComment {
   _id: ObjectId | string;
@@ -17,7 +18,9 @@ export interface IComment {
 }
 
 export interface ExpensesProps {
+  filterData?: Data;
   onToggle?: () => void;
   data?: IComment[];
   summary?: SummaryItem[];
 }
+

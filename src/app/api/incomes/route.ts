@@ -1,18 +1,17 @@
+import { getIncomesData } from "@/app/get-data/getIncomes";
+import { NextRequest, NextResponse } from "next/server";
 
-import { getIncomesData } from '@/app/get-data/getIncomes';
-import { NextRequest, NextResponse } from 'next/server';
-
-export async function GET(req: NextRequest) {
-  
- const id = req.nextUrl.searchParams.get('id');
-  if (typeof id === 'string') {
-      const data = await getIncomesData(id);
-  
+export async function POST(req: NextRequest) {
   try {
+    const { id, filter } = await req.json();
+
+    const data = await getIncomesData(id, filter);
+
     return NextResponse.json({ success: true, data });
-  } catch  {
-    return NextResponse.json({ success: false, error:  'Internal Error' }, { status: 500 });
-  }   
-    }
-   
+  } catch (e) {
+    return NextResponse.json(
+      { success: false, error: "Internal Error" },
+      { status: 500 }
+    );
+  }
 }

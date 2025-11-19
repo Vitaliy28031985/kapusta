@@ -2,24 +2,54 @@
 import { useState, useRef, useEffect } from 'react';
 import { FaRegTrashCan } from 'react-icons/fa6';
 import { BsFeather } from 'react-icons/bs';
-import income from '../../../db/income.json'
+import { category as categoryDb } from '../../../db/categoryIncome';
 import AddIncome from './AddIncome';
-import { ExpensesProps } from '@/app/interfaces/comments';
+import { ExpensesProps, IComment } from '@/app/interfaces/comments';
+import { useIncomeStore } from '@/store/incomes-store';
+import { useAuthStore } from '@/store/auth.store';
+import { formatDate, toInputDate } from '@/utils/date-convector';
 
 
-const IncomesTablet = ({ data, onToggle }: ExpensesProps) => {
+const IncomesTablet = ({ onToggle, filterData }: ExpensesProps) => {
+  const { session} = useAuthStore();
+  const {data, fetchIncomes, addIsToggle, updateField,} = useIncomeStore()
   const [add, setAdd] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const addRef = useRef<HTMLDivElement | null>(null);
 
+  const userId = session?.user?.id;
+
+     useEffect(() => {
+      if (userId && filterData) {
+         fetchIncomes(userId, filterData)
+       }
+         
+    }, [userId, filterData]);
+
   const isShowAdd = () => setAdd(prev => !prev);
 
-  console.log(data)
+     
+  
   useEffect(() => {
     if (add && scrollContainerRef.current && addRef.current) {
          addRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
   }, [add]);
+
+    const onDeleteToggle = (id: string, current: boolean) => {
+    addIsToggle(id, !current, "delete");
+  };
+
+  
+  const onUpdateToggle = (id: string, current: boolean) => {
+    addIsToggle(id, !current, "update");
+  };
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    updateField(e.target.id, e.target.name, e.target.value);
+  };
+
+
 
   return (
     <section className='z-40 relative'>
@@ -37,17 +67,76 @@ const IncomesTablet = ({ data, onToggle }: ExpensesProps) => {
           ref={scrollContainerRef}
           className="overflow-y-auto max-h-[300px] scrollbar-bt_col"
         >
-          {income?.map(({ id, date, description, category, sum }) => (
-            <div key={id} className="flex items-center py-1 mx-[2px] mb-[2px] bg-white shadow-shadow_menu">
-              <div className="tab:w-[116px] desk:w-[136px] text-center text-sx text-text_op">{date}</div>
+          {data?.map(({ _id, date, description, category, sum, isShow, isDelete  }) => (
+            <div key={_id.toString()} className="flex items-center py-1 mx-[2px] mb-[2px] bg-white shadow-shadow_menu">
+              {isShow ? (<>
+               <input
+            id={_id.toString()}
+            name="date"
+            type="date"
+            className="appearance-none tab:pl-3 desk:pl-5 tab:pr-1  desk:pr-3  py-1 text-text_op w-full tab:w-[116px] desk:w-[136px] focus:outline-none"
+            defaultValue={toInputDate(date.toString())}
+            onChange={onChange}
+           />
+           <input
+             id={_id.toString()}
+             name="description"
+             type="text"
+             className="w-full tab:w-[190px] desk:w-[191px] text-text_op focus:outline-none"
+             defaultValue={description}
+             onChange={onChange}
+          />
+            <select className="appearance-none  w-full  desk:pl-5 tab:w-[106px] desk:w-[149px] text-text_op focus:outline-none"  name="category" autoComplete="off" defaultValue="Select a category">
+                      {
+                      categoryDb.map(({ id, name }) => (
+                          <option key={id} value={name}>
+                              {name}
+                         </option> 
+                      ))                
+                      }        
+                      </select>
+          <input
+            id={_id.toString()}
+            name="sum"
+            type="number"
+            className="tab:pl-2 desk:pl-3 w-full tab:w-[105px] desk:w-[105px] text-green focus:outline-none"
+            defaultValue={sum}
+            onChange={onChange}
+          />
+              </>) : (<>
+              <div className="tab:w-[116px] desk:w-[136px] text-center text-sx text-text_op">{formatDate(date.toString())}</div>
               <div className="tab:w-[190px] desk:w-[221px] text-sx text-text_op">{description}</div>
               <div className="tab:w-[156px] desk:w-[179px] text-center text-sx text-text_op">{category}</div>
-              <div className="tab:w-[105px] desk:w-[105px] text-center text-sx text-green">{`${sum} UAN.`}</div>
+              <div className="tab:w-[105px] desk:w-[105px] text-center text-sx text-green">{`${sum} UAN.`}</div></>)}
+              
               <div className="flex justify-center items-center tab:w-[105px] desk:w-[105px] gap-2 py-1">
                 <button className="flex justify-center items-center text-text_color w-8 h-8 hover:bg-bg_fon rounded-full" type="button">
                   <FaRegTrashCan className="size-[18px]" />
                 </button>
-                <button className="flex justify-center items-center text-text_color w-8 h-8 hover:bg-bg_fon rounded-full" type="button">
+                <button onClick={async () => {
+                                  onUpdateToggle(_id.toString(), isShow ?? false)
+                                  if (isShow) {
+                                  if (isShow && userId) {
+                                  const newIncome = {
+                                   id: _id.toString(),
+                                   date: new Date(date),
+                                   description,
+                                   category,
+                                   sum: Number(sum),
+                                   userId, 
+                                    };                   
+                                  // const resultUpdate = await updateExpense(newIncome);
+                                  // if (resultUpdate.status !== 'error') {
+                                  //   console.log("successfully", resultUpdate.message)
+                                    
+                                  // } else {
+                                  // console.log("Error", resultUpdate.message);  
+                                  //  }
+                                 if(onToggle)
+                                 onToggle();
+                                  }    
+                                  }
+                                  }} className="flex justify-center items-center text-text_color w-8 h-8 hover:bg-bg_fon rounded-full" type="button">
                   <BsFeather className="size-[18px]" />
                 </button>
               </div>

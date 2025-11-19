@@ -14,6 +14,7 @@ import { useExpenseStore } from "@/store/expenses-store";
 import { generatorOfGeneralizationByMonths } from "@/utils/generator-of-generalization-by-months";
 import { useIncomeStore } from "@/store/incomes-store";
 import { getBalance } from "@/utils/get-balance";
+import { defaultData } from "@/app/interfaces/filter";
 
 
 const CommentsContainer = () => {
@@ -37,7 +38,7 @@ const CommentsContainer = () => {
    useEffect(() => {
         if (session?.user?.id) {
             fetchExpenses(session.user.id);
-            fetchIncomes(session.user.id)
+            fetchIncomes(session.user.id, defaultData)
        }
          
     }, [session?.user?.id, toggle]);

@@ -1,10 +1,11 @@
 import { getIncomesData } from '@/app/fetchFunctions/getIncomes';
 import { IComment } from '@/app/interfaces/comments';
+import { Data } from '@/app/interfaces/filter';
 import { create } from 'zustand';
 
 interface IncomesState {
     data: IComment[];
-    fetchIncomes: (userId: string) => Promise<void>;
+    fetchIncomes: (userId: string, filter: Data) => Promise<void>;
 
      addIsToggle: (
         id: string,
@@ -14,15 +15,15 @@ interface IncomesState {
 
     updateField: (id: string, name: string, value: string) => void;
 
-    addLocalExpense: (exp: IComment) => void;
+    addLocalIncome: (exp: IComment) => void;
 }
 
 export const useIncomeStore = create<IncomesState>((set) => ({
     data: [],
     
-    fetchIncomes: async (userId: string) => {
+    fetchIncomes: async (userId: string, filter) => {
         try {
-            const response = await getIncomesData(userId);
+            const response = await getIncomesData(userId, filter);
             const incomes: IComment[] = response.data?.data || [];
             
             const newIncomes = incomes.map(item => ({
@@ -60,7 +61,7 @@ export const useIncomeStore = create<IncomesState>((set) => ({
             )
         })),
 
-    addLocalExpense: (exp) =>
+    addLocalIncome: (exp) =>
         set((state) => ({
             data: [
                 {
