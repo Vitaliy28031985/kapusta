@@ -1,7 +1,7 @@
 'use client'
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { format, addMonths, subMonths } from "date-fns";
 import { FaArrowLeft } from "react-icons/fa6";
 import Balance from "./Balance";
@@ -9,6 +9,12 @@ import Category from "./Category";
 import Graphs from "./Graphs";
 import GraphsMobile from "./GraphsMobile";
 import CategoryIncome from "./CategoryIncome";
+import { useAuthStore } from "@/store/auth.store";
+import { useExpenseStore } from "@/store/expenses-store";
+import { useIncomeStore } from "@/store/incomes-store";
+import { defaultData } from "@/app/interfaces/filter";
+import { getBalance } from "@/utils/get-balance";
+import { getSumExpenses, getSumIncomes } from "@/utils/get-sum-comments";
 
 const data = [
     { label: "Pork", value: 1000 },
@@ -24,9 +30,22 @@ const data = [
   ];
 
 const ReportContainer = () => {
+  const { session} = useAuthStore();
   const [change, setChange] = useState(false)
   const [categoryData, setCategoryData] = useState<string>('');
-  const [currentDate, setCurrentDate] = useState(new Date(2025, 10));
+    const [currentDate, setCurrentDate] = useState(new Date(2025, 10));
+    
+    const { data: expenses, fetchExpenses } = useExpenseStore();
+    
+        const {data: incomes, fetchIncomes} = useIncomeStore()
+    
+ useEffect(() => {
+        if (session?.user?.id) {
+            fetchExpenses(session.user.id, defaultData);
+            fetchIncomes(session.user.id, defaultData)
+       }
+         
+    }, [session?.user?.id]);
   
   const toggle = () => setChange(toggle => !toggle)
 
@@ -43,8 +62,11 @@ const ReportContainer = () => {
   const getCategoryData = (category: string) => {
           setCategoryData(category);
   }
-  
- console.log(currentDate, categoryData)
+    const expensesSum = getSumExpenses(expenses);
+
+    const incomesSum = getSumIncomes(incomes);
+
+    console.log(expensesSum, incomesSum);
     return (
         <main className="relative min-h-screen">
             
@@ -56,7 +78,7 @@ const ReportContainer = () => {
                     <div className="mob:mb-8 tab:mb-0 mx-auto  tab:flex gap-5 items-center">
                     <p className="mob:mb-2 tab:mb-0 mob:text-center tab:text-start text-sx font-medium text-text_color">Balance:</p>
                     <div className="  py-3 pr-5 pl-2 border-2 border-white rounded-[16px]">
-                        <p className="text-sx font-bold text-end">55 000.00 UAH</p>
+                        <p className="text-sx font-bold text-end">{`${getBalance(expenses, incomes).toFixed(2)} UAH`}</p>
                     </div>
                     <button className="w-[125px] mob:hidden desk:block py-3 px-[6px] border-2 border-white rounded-[16px] text-center text-text_color text-sx font-normal hover:text-text_op" type="button">CONFIRM</button>
                     </div>
@@ -77,7 +99,7 @@ const ReportContainer = () => {
                    </div>
                  </div>    
                 </section>
-                <Balance />
+                <Balance expensesSum={expensesSum} incomesSum={incomesSum} />
                <section className="mob:h-[630px] tab:h-[368px] mt-8 py-5  tab:bg-white rounded-[30px]  tab:shadow-shadow">
             
                 {/* tabs */}
