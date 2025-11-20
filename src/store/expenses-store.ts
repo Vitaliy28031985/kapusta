@@ -1,10 +1,11 @@
 import { getExpensesData } from '@/app/fetchFunctions/getExpenses';
 import { IComment } from '@/app/interfaces/comments';
+import { Data } from '@/app/interfaces/filter';
 import { create } from 'zustand';
 
 interface ExpenseState {
     data: IComment[];
-    fetchExpenses: (userId: string) => Promise<void>;
+    fetchExpenses: (userId: string,  filter: Data) => Promise<void>;
 
      addIsToggle: (
         id: string,
@@ -20,9 +21,9 @@ interface ExpenseState {
 export const useExpenseStore = create<ExpenseState>((set) => ({
     data: [],
     
-    fetchExpenses: async (userId: string) => {
+    fetchExpenses: async (userId: string, filter) => {
         try {
-            const response = await getExpensesData(userId);
+            const response = await getExpensesData(userId, filter);
             const expenses: IComment[] = response.data?.data || [];
             
             const newExpenses = expenses.map(item => ({

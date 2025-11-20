@@ -4,7 +4,6 @@ import { Data, defaultData } from "@/app/interfaces/filter";
 import { useState } from "react";
 import Filter from "./Filter";
 import IncomesTablet from "./IncomeTablet";
-import { SummaryItem } from '@/app/interfaces/months';
 import Months from "./Months";
 import { category } from "@/db/categoryIncome";
 import { ExpensesProps } from "@/app/interfaces/comments";

@@ -1,18 +1,18 @@
 
 import { getExpensesData } from '@/app/get-data/getExpenses';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
-  
- const id = req.nextUrl.searchParams.get('id');
-  if (typeof id === 'string') {
-      const data = await getExpensesData(id);
-  
+export async function POST(req: NextRequest) {
   try {
+    const { id, filter } = await req.json();
+
+    const data = await getExpensesData(id, filter);
+
     return NextResponse.json({ success: true, data });
-  } catch  {
-    return NextResponse.json({ success: false, error:  'Internal Error' }, { status: 500 });
-  }   
-    }
-   
+  } catch (e) {
+    return NextResponse.json(
+      { success: false, error: "Internal Error" },
+      { status: 500 }
+    );
+  }
 }

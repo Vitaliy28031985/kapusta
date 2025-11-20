@@ -37,7 +37,7 @@ const CommentsContainer = () => {
     
    useEffect(() => {
         if (session?.user?.id) {
-            fetchExpenses(session.user.id);
+            fetchExpenses(session.user.id, defaultData);
             fetchIncomes(session.user.id, defaultData)
        }
          
@@ -96,16 +96,13 @@ const CommentsContainer = () => {
                         <input onChange={(e) => setName(e.target.value)} type="radio"  className="absolute opacity-0 w-0 h-0" checked={name === "income"} name="toggle" id="income"  value="income" />
                     </div>
                
-               
-               
-               
                 </div>
 
               <div>
                     {name === 'expenses' ? (
                 <div>
                    <div className="mob:hidden tab:block">
-                   <Expenses summary={summaryExpenses} data={data ?? []} onToggle={onToggle} />
+                   <Expenses summary={summaryExpenses} onToggle={onToggle} />
                    </div>
                     <div className="tab:hidden"><ExpensesMobile showFilter={showFilter} isShowFilter={isShowFilter}  data={data} onToggle={onToggle} toggle={toggle} /></div>         
                 </div>

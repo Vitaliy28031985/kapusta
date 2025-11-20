@@ -13,22 +13,27 @@ import { updateExpense } from '@/actions/updateExpense';
 import { deleteExpense } from '@/actions/deleteExpense';
 
 
-const ExpensesTablet = ({ data, onToggle }: ExpensesProps) => {
+const ExpensesTablet = ({ onToggle,  filterData }: ExpensesProps) => {
   
-const {
-  addIsToggle,
-  updateField,
-  } = useExpenseStore();
-  
-  const { session } = useAuthStore();
+ const { session} = useAuthStore();
+  const {data, fetchExpenses, addIsToggle, updateField,} = useExpenseStore()
       
   const userId = session?.user?.id;
 
   const [add, setAdd] = useState(false);
+  const [render, setRender] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const addRef = useRef<HTMLDivElement | null>(null);
 
+
   const isShowAdd = () => setAdd(prev => !prev);
+  const isRender = () => setRender(prev => !prev);
+
+  useEffect(() => {
+      if (userId && filterData) {
+         fetchExpenses(userId, filterData)
+       }    
+    }, [userId, filterData, render, add]);
 
   
   useEffect(() => {
@@ -122,7 +127,8 @@ const {
                     
                   } else {
                   console.log("Error", resultDelete.message);  
-                   }
+                  }
+                 isRender();
                  if(onToggle)
                  onToggle();
                 }}
@@ -147,7 +153,8 @@ const {
                     
                   } else {
                   console.log("Error", resultUpdate.message);  
-                   }
+                    }
+                 isRender();
                  if(onToggle)
                  onToggle();
                   }    
