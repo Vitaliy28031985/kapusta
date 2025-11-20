@@ -66,7 +66,7 @@ const ReportContainer = () => {
 
     const incomesSum = getSumIncomes(incomes);
 
-    console.log(expensesSum, incomesSum);
+    console.log(categoryData);
     return (
         <main className="relative min-h-screen">
             
@@ -108,7 +108,7 @@ const ReportContainer = () => {
               <p className="text-sm font-bold">{change ? 'INCOME' : 'EXPENSES'}</p>
               <button onClick={toggle} type="button" className="text-bt_col px-2 text-lg hover:text-orange-600">&#10095;</button>
               </div>
-            {change ? (<CategoryIncome categoryData={getCategoryData} />) : (<Category categoryData={getCategoryData}/>)}
+            {change ? (<CategoryIncome nameComments={'incomes'} data={incomes} categoryData={getCategoryData} />) : (<Category  nameComments={'expenses'} data={expenses ?? []} categoryData={getCategoryData}/>)}
                
                 </section>
                <section className="h-[368px] relative z-20 mt-8 py-5 tab:px-9 desk:px-0  bg-white tab:rounded-[30px]  tab:shadow-shadow">

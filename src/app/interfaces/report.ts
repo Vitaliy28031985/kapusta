@@ -1,3 +1,5 @@
+import { IComment } from "./comments";
+
 interface DataItem {
   label: string;
   value: number;
@@ -16,6 +18,8 @@ export interface DataCategory {
 }
 
 export interface CategoryProps {
+  data?: IComment[];
+  nameComments: string;
   categoryData: (category: string) => void;
 }
 
