@@ -15,7 +15,7 @@ import { updateExpense } from '@/actions/updateExpense';
 
 const TabletExpensesMobile = ({ onToggle,  filterData }: ExpensesProps) => {
 
- const {data, fetchExpenses, addIsToggle, updateField,} = useExpenseStore()
+ const {data, fetchExpenses, addIsToggle, updateField} = useExpenseStore()
     
     const { session } = useAuthStore();
           
@@ -54,7 +54,7 @@ const TabletExpensesMobile = ({ onToggle,  filterData }: ExpensesProps) => {
                 <div key={_id.toString()} className="mx-5 flex justify-center items-center gap-5 mb-2 pb-2 border-2 border-t-transparent border-l-transparent border-r-transparent border-b-bg_fon">
                     {isShow ? (
         <>
-                     <div className='w-[127px]'>
+            <div className='w-[127px]'>
                 <input
                       id={_id.toString()}
                       name="description"

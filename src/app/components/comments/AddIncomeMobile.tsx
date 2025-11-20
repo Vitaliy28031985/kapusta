@@ -4,10 +4,13 @@ import { AiOutlineClose } from 'react-icons/ai';
 import AddExpenseProps from "@/app/interfaces/addExpense";
 import {category} from '../../../db/categoryIncome';
 import { addIncome } from "@/actions/addIncome";
+import { useAuthStore } from "@/store/auth.store";
 
 
-const AddIncomeModule = ({ isShowAdd }: AddExpenseProps) => {
-
+const AddIncomeModule = ({ isShowAdd, onToggle }: AddExpenseProps) => {
+const { session } = useAuthStore();
+        
+        const userId = session?.user?.id;
 
     useEffect(() => {
       window.addEventListener('keydown', handleKeyDown);
@@ -31,9 +34,20 @@ const AddIncomeModule = ({ isShowAdd }: AddExpenseProps) => {
 
 
     const onSubmit = async (formData: FormData) => { 
-      const data = await addIncome(formData);
-       console.log(data);
+    if (userId) {
+        formData.append("id", userId);
+    }
+        const data = await addIncome(formData);
+        
+         if (data.status !== 'error') {
+            console.log("successfully", data.message)
+        } else {
+           console.log("Error", data.message);  
+        }
+       
         isShowAdd();
+        if(onToggle)
+        onToggle();
     }
 
 return (

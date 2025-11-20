@@ -6,11 +6,10 @@ import FilterMobile from './FilterMobile';
 import { Data, defaultData } from '@/app/interfaces/filter';
 import TabletExpensesMobile from './TabletExpensesMobile';
 import { category } from "@/db/categoryExpenses";
-import { IComment } from '@/app/interfaces/comments';
+
 
 
 interface Expenses {
-    data: IComment[];
     showFilter: boolean;
     isShowFilter: () => void;
     onToggle: () => void;

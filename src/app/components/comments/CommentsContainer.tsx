@@ -78,7 +78,7 @@ const CommentsContainer = () => {
                     <p className="text-sx text-center font-medium text-text_color">Balance:</p>
                     <div className="flex justify-center items-center mt-2">
                         <div className="w-[140px] py-3 pr-5 pl-2 border-2 border-white rounded-l-[50px]">
-                            <p className="text-sx font-bold text-end">00.00 UAH</p>
+                            <p className="text-sx font-bold text-end">{`${getBalance(data, incomes).toFixed(2)} UAH`}</p>
                         </div>
                         <button type="button" className="w-[142px] py-3 px-[6px] border-2 rounded-r-[50px] border-white text-start text-text_color text-sx font-normal hover:text-white hover:bg-bt_col">CONFIRM</button>
                     </div>
@@ -104,12 +104,12 @@ const CommentsContainer = () => {
                    <div className="mob:hidden tab:block">
                    <Expenses summary={summaryExpenses} onToggle={onToggle} />
                    </div>
-                    <div className="tab:hidden"><ExpensesMobile showFilter={showFilter} isShowFilter={isShowFilter}  data={data} onToggle={onToggle} toggle={toggle} /></div>         
+                    <div className="tab:hidden"><ExpensesMobile showFilter={showFilter} isShowFilter={isShowFilter} onToggle={onToggle} toggle={toggle} /></div>         
                 </div>
                     ) : (
                             <div>
                                 <div className="mob:hidden tab:block"><Income summary={summaryIncomes} onToggle={onToggle} /></div>
-                                <div className="tab:hidden"><IncomeMobile  onToggle={onToggle} toggle={toggle} /></div>
+                                <div className="tab:hidden"><IncomeMobile  showFilter={showFilter} isShowFilter={isShowFilter} onToggle={onToggle} toggle={toggle} /></div>
                             </div>
                     )}
             </div>   
