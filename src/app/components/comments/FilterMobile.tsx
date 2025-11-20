@@ -4,7 +4,7 @@ import { FaAngleDown, FaCalculator, FaRegCalendarDays } from "react-icons/fa6";
 import { Data, defaultData, FilterProps } from "@/app/interfaces/filter";
 
 
-const FilterMobile = ({ filterData, category }: FilterProps) => {
+const FilterMobile = ({ filterData, category, isShowFilter }: FilterProps) => {
     const [data, setData] = useState<Data>(defaultData);
       
   const [showMenu, setShowMenu] = useState(false);
@@ -57,14 +57,16 @@ const FilterMobile = ({ filterData, category }: FilterProps) => {
    filterData({ ...data, action: true });
   } else {
     filterData({ ...data, action: true, date: null });
- }
+      }
+      if (isShowFilter)
+        isShowFilter();
     };
     
     const clear = () => {
       setData(defaultData);
       filterData(defaultData);
       setChangeDate(false);
-    }
+          }
       
       
     return (

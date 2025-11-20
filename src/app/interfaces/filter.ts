@@ -11,6 +11,7 @@ export interface Data {
 export interface FilterProps { 
   filterData: (data: Data) => void;
   category: DataCategory[];
+  isShowFilter?: () => void;
 }
 
  export const defaultData = {

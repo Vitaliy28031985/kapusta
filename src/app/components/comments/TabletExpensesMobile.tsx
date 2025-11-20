@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaRegTrashCan } from 'react-icons/fa6';
 import { BsFeather } from 'react-icons/bs';
 import AddExpenseModule from './AddExpenseMobile';
@@ -13,33 +13,36 @@ import { deleteExpense } from '@/actions/deleteExpense';
 import { updateExpense } from '@/actions/updateExpense';
 
 
-const TabletExpensesMobile = ({ data, onToggle }: ExpensesProps) => {
+const TabletExpensesMobile = ({ onToggle,  filterData }: ExpensesProps) => {
 
-    const {
-      addIsToggle,
-      updateField,
-    } = useExpenseStore();
+ const {data, fetchExpenses, addIsToggle, updateField,} = useExpenseStore()
     
     const { session } = useAuthStore();
           
     const userId = session?.user?.id;
 
-    const [add, setAdd] = useState(false);
-    const isShowAdd = () => setAdd(prev => !prev);
+  const [add, setAdd] = useState(false);
+  const [render, setRender] = useState(false);
+  const isShowAdd = () => setAdd(prev => !prev);
+  const isRender = () => setRender(prev => !prev);
+  
+    useEffect(() => {
+        if (userId && filterData) {
+           fetchExpenses(userId, filterData)
+         }    
+      }, [userId, filterData, render, add]);
 
         
-    
-       // 🗑 Видалення (показати confirm)
       const onDeleteToggle = (id: string, current: boolean) => {
         addIsToggle(id, !current, "delete");
       };
     
-      // ✏ Редагування (показати форму)
+  
       const onUpdateToggle = (id: string, current: boolean) => {
         addIsToggle(id, !current, "update");
       };
     
-      // 📝 Обробка змін в інпуті
+      
       const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         updateField(e.target.id, e.target.name, e.target.value);
       };
@@ -101,16 +104,17 @@ const TabletExpensesMobile = ({ data, onToggle }: ExpensesProps) => {
            
             <div className='flex justify-center items-center'>
                 <button onClick={async () => {
-                                  onDeleteToggle(_id.toString(), isDelete ?? false);
-                                  const resultDelete = await deleteExpense(_id.toString(), userId ?? '');
-                                   if (resultDelete.status !== 'error') {
-                                    console.log("successfully", resultDelete.message)
+                    onDeleteToggle(_id.toString(), isDelete ?? false);
+                    const resultDelete = await deleteExpense(_id.toString(), userId ?? '');
+                     if (resultDelete.status !== 'error') {
+                      console.log("successfully", resultDelete.message)
                                     
-                                  } else {
-                                  console.log("Error", resultDelete.message);  
-                                   }
-                                 if(onToggle)
-                                 onToggle();
+                    } else {
+                    console.log("Error", resultDelete.message);  
+                    }
+                    isRender();
+                    if(onToggle)
+                   onToggle();
                 }} className='flex justify-center items-center text-text_color w-8 h-8 hover:bg-bg_fon rounded-full' type='button'><FaRegTrashCan className='size-[18px]'/></button>                   
                 <button onClick={async () => {
                                   onUpdateToggle(_id.toString(), isShow ?? false)
@@ -130,7 +134,8 @@ const TabletExpensesMobile = ({ data, onToggle }: ExpensesProps) => {
                                     
                                   } else {
                                   console.log("Error", resultUpdate.message);  
-                                   }
+                                    }
+                                 isRender();
                                  if(onToggle)
                                  onToggle();
                                   }    
