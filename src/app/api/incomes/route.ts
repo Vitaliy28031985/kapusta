@@ -9,6 +9,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ success: true, data });
   } catch (e) {
+    console.error(e, "Internal Error");
     return NextResponse.json(
       { success: false, error: "Internal Error" },
       { status: 500 }
