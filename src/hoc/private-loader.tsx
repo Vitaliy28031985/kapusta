@@ -1,5 +1,6 @@
 "use client";
 
+import Loader from "@/app/components/ui/Loader";
 import { useAuthStore } from "@/store/auth.store";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -20,5 +21,7 @@ export default function PrivateLoader({ children }: { children: React.ReactNode 
 
   }, [isAuth, router]);
 
-  return <>{children}</>;
+  return (<>
+    {isAuth ? (<>{children}</>) : (<Loader/>)}
+    </>)
 }
