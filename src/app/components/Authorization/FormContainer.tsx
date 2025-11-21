@@ -7,12 +7,16 @@ import Login from "./login";
 import Register from "./Register";
 import { register } from "@/actions/register";
 import { signInWithCredentials } from "@/actions/sign-in";
+import AppNotification from "../ui/Notifications";
 
 
 
 
 const FormContainer = () => {
-
+  const [message, setMessage] = useState('');
+  const [notificationIsOpen, setNotificationIsOpen] = useState(false);
+  const [type, setType] = useState<'success' | 'error' | 'warning' | 'info'>('success');
+  const [notificationTitle, setNotificationTitle] = useState<'Error' | 'Success' >('Success');
     
 
     const [chang, setChang] = useState(false);
@@ -53,8 +57,16 @@ const FormContainer = () => {
                 !data?.password?.toString() &&
                 !data.confirmPassword?.toString()
             ) {
-            alert("All fields must be filled in!");
-                return;
+                  
+            if(setMessage)
+            setMessage('Error: ' + ('All fields must be filled in!'));
+            if(setType)
+            setType('error');
+            if(setNotificationTitle)
+            setNotificationTitle('Error');
+            if(setNotificationIsOpen)
+            setNotificationIsOpen(true);
+             return;
             }
 
         if (data?.confirmPassword?.toString() || data?.userName?.toString()) {
@@ -65,8 +77,16 @@ const FormContainer = () => {
                 !data?.password?.toString() ||
                 !data.confirmPassword?.toString()
             ) {
-            alert("All fields must be filled in!");
-                return;
+                 
+              if(setMessage)
+              setMessage('Error: ' + ('All fields must be filled in!'));
+              if(setType)
+              setType('error');
+              if(setNotificationTitle)
+              setNotificationTitle('Error');
+              if(setNotificationIsOpen)
+              setNotificationIsOpen(true);
+               return;
             }
          
             if (data?.password?.toString() !== data?.confirmPassword?.toString()) {
@@ -82,13 +102,41 @@ const FormContainer = () => {
             !data?.email?.toString() ||
             !data?.password?.toString()
         ) {
-            alert("All fields must be filled in!");
-                return;
+             
+        if(setMessage)
+        setMessage('Error: ' + ('All fields must be filled in!'));
+        if(setType)
+        setType('error');
+        if(setNotificationTitle)
+        setNotificationTitle('Error');
+        if(setNotificationIsOpen)
+        setNotificationIsOpen(true);
+         return;
         }
-       const result = await signInWithCredentials(receivedData.email, receivedData.password);
-        console.log(result)
-
-        window.location.assign("/comment");
+        
+     
+        const result = await signInWithCredentials(receivedData.email, receivedData.password);
+        if (result.status === 'error') {
+             if(setMessage)
+        setMessage('Error: ' + ('An error occurred while logging in!'));
+        if(setType)
+        setType('error');
+        if(setNotificationTitle)
+        setNotificationTitle('Error');
+        if(setNotificationIsOpen)
+        setNotificationIsOpen(true); 
+        } else {
+         if(setMessage)
+      setMessage('Login was successful!');
+      if(setType)
+      setType('success');
+      if(setNotificationTitle)
+      setNotificationTitle('Success');
+            if (setNotificationIsOpen)
+                setNotificationIsOpen(true);  
+           window.location.assign("/comment");   
+        }
+              
     }
     
     return (
@@ -112,6 +160,14 @@ const FormContainer = () => {
                     className="px-4 py-3 border-2 border-transparent shadow-shadow bg-bg_fon text-text_color rounded-[16px] hover:border-bg_fon hover:bg-transparent">{ chang ? "LOGIN" : "REGISTER" }</button>
                 </div>
             </form>
+         {notificationIsOpen && (
+          <AppNotification  
+          type={type}
+          title={notificationTitle}
+          text={message}
+          onClose={() => setNotificationIsOpen(false)}
+        />
+      )}
         </div>
     )
 }
