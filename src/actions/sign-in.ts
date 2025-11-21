@@ -11,6 +11,6 @@ export async function signInWithCredentials(email: string, password: string) {
         return result;
     } catch (error) {
         console.error("error authorization", error);
-        throw error;
+        return { status: "error", message: "An error occurred during login!" };
     }
 }

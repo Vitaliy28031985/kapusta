@@ -15,19 +15,8 @@ import { useIncomeStore } from "@/store/incomes-store";
 import { defaultData } from "@/app/interfaces/filter";
 import { getBalance } from "@/utils/get-balance";
 import { getSumExpenses, getSumIncomes } from "@/utils/get-sum-comments";
+import { getGraphsData } from "@/utils/get-graphs-data";
 
-const data = [
-    { label: "Pork", value: 1000 },
-    { label: "Beef", value: 1000 },
-    { label: "Chicken", value: 600 },
-    { label: "Fish", value: 800 },
-    { label: "Panini", value: 220 },
-    { label: "Coffee", value: 350 },
-    { label: "Spaghetti", value: 230 },
-    { label: "Chocolate", value: 200 },
-    { label: "Olives", value: 300 },
-    { label: "Greens", value: 300 },
-  ];
 
 const ReportContainer = () => {
   const { session} = useAuthStore();
@@ -66,7 +55,7 @@ const ReportContainer = () => {
 
     const incomesSum = getSumIncomes(incomes);
 
-    console.log(categoryData);
+ 
     return (
         <main className="relative min-h-screen">
             
@@ -112,8 +101,8 @@ const ReportContainer = () => {
                
                 </section>
                <section className="h-[368px] relative z-20 mt-8 py-5 tab:px-9 desk:px-0  bg-white tab:rounded-[30px]  tab:shadow-shadow">
-               <div className="mob:hidden tab:block"><Graphs data={data}/></div>
-               <div className="tab:hidden"><GraphsMobile data={data}/></div>
+               <div className="mob:hidden tab:block"><Graphs data={change ? getGraphsData(incomes, categoryData) : getGraphsData(expenses, categoryData)}/></div>
+               <div className="tab:hidden"><GraphsMobile data={change ? getGraphsData(incomes, categoryData) : getGraphsData(expenses, categoryData)}/></div>
                </section>     
           
         

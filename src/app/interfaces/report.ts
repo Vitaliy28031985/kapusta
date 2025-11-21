@@ -1,6 +1,6 @@
 import { IComment } from "./comments";
 
-interface DataItem {
+export interface DataItem {
   label: string;
   value: number;
 }
