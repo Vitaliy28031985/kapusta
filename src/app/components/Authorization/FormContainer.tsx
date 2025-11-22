@@ -127,13 +127,13 @@ const FormContainer = () => {
         setNotificationIsOpen(true); 
         } else {
          if(setMessage)
-      setMessage('Login was successful!');
-      if(setType)
-      setType('success');
-      if(setNotificationTitle)
-      setNotificationTitle('Success');
-            if (setNotificationIsOpen)
-                setNotificationIsOpen(true);  
+        setMessage('Login was successful!');
+        if(setType)
+        setType('success');
+        if(setNotificationTitle)
+        setNotificationTitle('Success');
+        if (setNotificationIsOpen)
+            setNotificationIsOpen(true);  
            window.location.assign("/comment");   
         }
               

@@ -6,7 +6,13 @@ import AddExpenseProps from "@/app/interfaces/addExpense";
 import { useAuthStore } from "@/store/auth.store";
 
  
-const AddExpense: React.FC<AddExpenseProps> = ({ isShowAdd, onToggle }: AddExpenseProps) => {
+const AddExpense: React.FC<AddExpenseProps> = ({
+    isShowAdd,
+    onToggle,
+    setMessage,
+    setNotificationIsOpen,
+    setType,
+    setNotificationTitle }: AddExpenseProps) => {
 
     const { session } = useAuthStore();
     
@@ -22,8 +28,23 @@ const AddExpense: React.FC<AddExpenseProps> = ({ isShowAdd, onToggle }: AddExpen
 
         if (data.status !== 'error') {
             console.log("successfully", data.message)
+            if(setMessage)
+              setMessage(data.message);
+              if(setType)
+               setType('success');
+              if(setNotificationTitle)
+              setNotificationTitle('Success');
+              if (setNotificationIsOpen)
+               setNotificationIsOpen(true); 
         } else {
-           console.log("Error", data.message);  
+           if(setMessage)
+           setMessage('Error: ' + (data.message));
+           if(setType)
+           setType('error');
+            if(setNotificationTitle)
+            setNotificationTitle('Error');
+            if(setNotificationIsOpen)
+            setNotificationIsOpen(true);   
         }
        
         isShowAdd();

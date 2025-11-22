@@ -11,9 +11,15 @@ import { useAuthStore } from '@/store/auth.store';
 import { category as categoryDb } from '../../../db/categoryExpenses';
 import { deleteExpense } from '@/actions/deleteExpense';
 import { updateExpense } from '@/actions/updateExpense';
+import AppNotification from '../ui/Notifications';
 
 
-const TabletExpensesMobile = ({ onToggle,  filterData }: ExpensesProps) => {
+const TabletExpensesMobile = ({ onToggle, filterData }: ExpensesProps) => {
+  
+  const [message, setMessage] = useState('');
+  const [notificationIsOpen, setNotificationIsOpen] = useState(false);
+  const [type, setType] = useState<'success' | 'error' | 'warning' | 'info'>('success');
+  const [notificationTitle, setNotificationTitle] = useState<'Error' | 'Success' >('Success');
 
  const {data, fetchExpenses, addIsToggle, updateField} = useExpenseStore()
     
@@ -106,12 +112,25 @@ const TabletExpensesMobile = ({ onToggle,  filterData }: ExpensesProps) => {
                 <button onClick={async () => {
                     onDeleteToggle(_id.toString(), isDelete ?? false);
                     const resultDelete = await deleteExpense(_id.toString(), userId ?? '');
-                     if (resultDelete.status !== 'error') {
-                      console.log("successfully", resultDelete.message)
-                                    
-                    } else {
-                    console.log("Error", resultDelete.message);  
-                    }
+                      if (resultDelete.status !== 'error') {
+                      setMessage(resultDelete.message);
+                      if(setType)
+                      setType('success');
+                      if(setNotificationTitle)
+                      setNotificationTitle('Success');
+                      if (setNotificationIsOpen)
+                      setNotificationIsOpen(true);  
+                    
+                  } else {
+                       if(setMessage)
+                       setMessage('Error: ' + (resultDelete.message));
+                       if(setType)
+                       setType('error');
+                       if(setNotificationTitle)
+                       setNotificationTitle('Error');
+                       if(setNotificationIsOpen)
+                       setNotificationIsOpen(true);    
+                  }
                     isRender();
                     if(onToggle)
                    onToggle();
@@ -130,11 +149,24 @@ const TabletExpensesMobile = ({ onToggle,  filterData }: ExpensesProps) => {
                                     };                   
                                   const resultUpdate = await updateExpense(newExpense);
                                   if (resultUpdate.status !== 'error') {
-                                    console.log("successfully", resultUpdate.message)
-                                    
-                                  } else {
-                                  console.log("Error", resultUpdate.message);  
-                                    }
+                                   setMessage(resultUpdate.message);
+                                   if(setType)
+                                   setType('success');
+                                   if(setNotificationTitle)
+                                   setNotificationTitle('Success');
+                                   if (setNotificationIsOpen)
+                                   setNotificationIsOpen(true); 
+                                        
+                               } else {
+                               if(setMessage)
+                               setMessage('Error: ' + (resultUpdate.message));
+                               if(setType)
+                               setType('error');
+                               if(setNotificationTitle)
+                               setNotificationTitle('Error');
+                               if(setNotificationIsOpen)
+                               setNotificationIsOpen(true);   
+                                 }
                                  isRender();
                                  if(onToggle)
                                  onToggle();
@@ -153,7 +185,20 @@ const TabletExpensesMobile = ({ onToggle,  filterData }: ExpensesProps) => {
       >
         Add
         </button>
-            {add && (<AddExpenseModule isShowAdd={isShowAdd} onToggle={onToggle} />)}   
+        {add && (<AddExpenseModule
+                setMessage={setMessage}
+                setNotificationIsOpen={setNotificationIsOpen}
+                setType={setType}
+                setNotificationTitle={setNotificationTitle} isShowAdd={isShowAdd} onToggle={onToggle} />)} 
+        
+         {notificationIsOpen && (
+          <AppNotification  
+          type={type}
+          title={notificationTitle}
+          text={message}
+          onClose={() => setNotificationIsOpen(false)}
+        />
+      )}
        </section>
     )
 }

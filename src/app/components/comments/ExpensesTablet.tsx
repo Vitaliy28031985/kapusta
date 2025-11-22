@@ -11,9 +11,15 @@ import { category as categoryDb } from '../../../db/categoryExpenses';
 import { useAuthStore } from '@/store/auth.store';
 import { updateExpense } from '@/actions/updateExpense';
 import { deleteExpense } from '@/actions/deleteExpense';
+import AppNotification from '../ui/Notifications';
 
 
-const ExpensesTablet = ({ onToggle,  filterData }: ExpensesProps) => {
+const ExpensesTablet = ({ onToggle, filterData }: ExpensesProps) => {
+  
+  const [message, setMessage] = useState('');
+  const [notificationIsOpen, setNotificationIsOpen] = useState(false);
+  const [type, setType] = useState<'success' | 'error' | 'warning' | 'info'>('success');
+  const [notificationTitle, setNotificationTitle] = useState<'Error' | 'Success' >('Success');
   
  const { session} = useAuthStore();
   const {data, fetchExpenses, addIsToggle, updateField,} = useExpenseStore()
@@ -123,10 +129,23 @@ const ExpensesTablet = ({ onToggle,  filterData }: ExpensesProps) => {
                   onDeleteToggle(_id.toString(), isDelete ?? false);
                   const resultDelete = await deleteExpense(_id.toString(), userId ?? '');
                    if (resultDelete.status !== 'error') {
-                    console.log("successfully", resultDelete.message)
+                      setMessage(resultDelete.message);
+                      if(setType)
+                      setType('success');
+                      if(setNotificationTitle)
+                      setNotificationTitle('Success');
+                      if (setNotificationIsOpen)
+                      setNotificationIsOpen(true);  
                     
                   } else {
-                  console.log("Error", resultDelete.message);  
+                       if(setMessage)
+                       setMessage('Error: ' + (resultDelete.message));
+                       if(setType)
+                       setType('error');
+                       if(setNotificationTitle)
+                       setNotificationTitle('Error');
+                       if(setNotificationIsOpen)
+                       setNotificationIsOpen(true);    
                   }
                  isRender();
                  if(onToggle)
@@ -148,11 +167,24 @@ const ExpensesTablet = ({ onToggle,  filterData }: ExpensesProps) => {
                    userId, 
                     };                   
                   const resultUpdate = await updateExpense(newExpense);
-                  if (resultUpdate.status !== 'error') {
-                    console.log("successfully", resultUpdate.message)
-                    
+                    if (resultUpdate.status !== 'error') {
+                      setMessage(resultUpdate.message);
+                      if(setType)
+                      setType('success');
+                      if(setNotificationTitle)
+                      setNotificationTitle('Success');
+                      if (setNotificationIsOpen)
+                      setNotificationIsOpen(true); 
+                                        
                   } else {
-                  console.log("Error", resultUpdate.message);  
+                  if(setMessage)
+                  setMessage('Error: ' + (resultUpdate.message));
+                  if(setType)
+                  setType('error');
+                  if(setNotificationTitle)
+                  setNotificationTitle('Error');
+                  if(setNotificationIsOpen)
+                  setNotificationIsOpen(true);   
                     }
                  isRender();
                  if(onToggle)
@@ -169,7 +201,12 @@ const ExpensesTablet = ({ onToggle,  filterData }: ExpensesProps) => {
          
           {add && (
             <div ref={addRef}>
-              <AddExpense isShowAdd={isShowAdd} onToggle={onToggle} />
+              <AddExpense
+                setMessage={setMessage}
+                setNotificationIsOpen={setNotificationIsOpen}
+                setType={setType}
+                setNotificationTitle={setNotificationTitle}
+                isShowAdd={isShowAdd} onToggle={onToggle} />
             </div>
           )}
         </div>
@@ -182,6 +219,15 @@ const ExpensesTablet = ({ onToggle,  filterData }: ExpensesProps) => {
       >
         Add
       </button>
+
+       {notificationIsOpen && (
+          <AppNotification  
+          type={type}
+          title={notificationTitle}
+          text={message}
+          onClose={() => setNotificationIsOpen(false)}
+        />
+      )}
     </section>
   );
 };
