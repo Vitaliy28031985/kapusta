@@ -7,7 +7,14 @@ import { addIncome } from "@/actions/addIncome";
 import { useAuthStore } from "@/store/auth.store";
 
 
-const AddIncomeModule = ({ isShowAdd, onToggle }: AddExpenseProps) => {
+const AddIncomeModule = ({
+  isShowAdd,
+  onToggle,
+  setMessage,
+  setNotificationIsOpen,
+  setType,
+  setNotificationTitle
+}: AddExpenseProps) => {
 const { session } = useAuthStore();
         
         const userId = session?.user?.id;
@@ -41,8 +48,23 @@ const { session } = useAuthStore();
         
          if (data.status !== 'error') {
             console.log("successfully", data.message)
+            if(setMessage)
+              setMessage(data.message);
+              if(setType)
+               setType('success');
+              if(setNotificationTitle)
+              setNotificationTitle('Success');
+              if (setNotificationIsOpen)
+               setNotificationIsOpen(true); 
         } else {
-           console.log("Error", data.message);  
+           if(setMessage)
+           setMessage('Error: ' + (data.message));
+           if(setType)
+           setType('error');
+            if(setNotificationTitle)
+            setNotificationTitle('Error');
+            if(setNotificationIsOpen)
+            setNotificationIsOpen(true);   
         }
        
         isShowAdd();

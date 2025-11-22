@@ -11,10 +11,17 @@ import { useAuthStore } from '@/store/auth.store';
 import { formatDate, toInputDate } from '@/utils/date-convector';
 import { deleteIncome } from '@/actions/deleteIncome';
 import { updateIncome } from '@/actions/updateIncome';
+import AppNotification from '../ui/Notifications';
 
 
 
 const TabletIncomeMobile = ({ onToggle, filterData }: ExpensesProps) => {
+
+  const [message, setMessage] = useState('');
+  const [notificationIsOpen, setNotificationIsOpen] = useState(false);
+  const [type, setType] = useState<'success' | 'error' | 'warning' | 'info'>('success');
+  const [notificationTitle, setNotificationTitle] = useState<'Error' | 'Success' >('Success');
+
     const { data, fetchIncomes, addIsToggle, updateField } = useIncomeStore();
         const { session } = useAuthStore();
               
@@ -100,12 +107,25 @@ const TabletIncomeMobile = ({ onToggle, filterData }: ExpensesProps) => {
                 <button onClick={async () => {
                     onDeleteToggle(_id.toString(), isDelete ?? false);
                 const resultDelete = await deleteIncome(_id.toString(), userId ?? '');
-                    if (resultDelete.status !== 'error') {
-                    console.log("successfully", resultDelete.message)
-                                                    
-                } else {
-                console.log("Error", resultDelete.message);  
-                     }
+                if (resultDelete.status !== 'error') {
+                      setMessage(resultDelete.message);
+                      if(setType)
+                      setType('success');
+                      if(setNotificationTitle)
+                      setNotificationTitle('Success');
+                      if (setNotificationIsOpen)
+                      setNotificationIsOpen(true);  
+                    
+                  } else {
+                       if(setMessage)
+                       setMessage('Error: ' + (resultDelete.message));
+                       if(setType)
+                       setType('error');
+                       if(setNotificationTitle)
+                       setNotificationTitle('Error');
+                       if(setNotificationIsOpen)
+                       setNotificationIsOpen(true);    
+                  }
                     isRender()
                 if(onToggle)
                 onToggle();
@@ -123,12 +143,25 @@ const TabletIncomeMobile = ({ onToggle, filterData }: ExpensesProps) => {
                     userId, 
                      };                   
                     const resultUpdate = await updateIncome(newIncome);
-                        if (resultUpdate.status !== 'error') {
-                     console.log("successfully", resultUpdate.message)
-                                                    
-                    } else {
-                    console.log("Error", resultUpdate.message);  
-                     }
+                    if (resultUpdate.status !== 'error') {
+                      setMessage(resultUpdate.message);
+                      if(setType)
+                      setType('success');
+                      if(setNotificationTitle)
+                      setNotificationTitle('Success');
+                      if (setNotificationIsOpen)
+                      setNotificationIsOpen(true); 
+                                        
+                       } else {
+                       if(setMessage)
+                       setMessage('Error: ' + (resultUpdate.message));
+                       if(setType)
+                       setType('error');
+                       if(setNotificationTitle)
+                       setNotificationTitle('Error');
+                       if(setNotificationIsOpen)
+                       setNotificationIsOpen(true);   
+                         }
                      isRender();
                  if(onToggle)
                  onToggle();
@@ -147,7 +180,20 @@ const TabletIncomeMobile = ({ onToggle, filterData }: ExpensesProps) => {
       >
         Add
         </button>
-         {add && (<AddIncomeModule isShowAdd={isShowAdd} onToggle={onToggle}/>)}   
+        {add && (<AddIncomeModule
+          setMessage={setMessage}
+          setNotificationIsOpen={setNotificationIsOpen}
+          setType={setType}
+          setNotificationTitle={setNotificationTitle}
+          isShowAdd={isShowAdd} onToggle={onToggle} />)}
+            {notificationIsOpen && (
+          <AppNotification  
+          type={type}
+          title={notificationTitle}
+          text={message}
+          onClose={() => setNotificationIsOpen(false)}
+        />
+      )}
        </section>
     )
 }

@@ -94,9 +94,16 @@ const FormContainer = () => {
                 return;
             }
 
-         const singUp = await register({userName: receivedData.userName, email: receivedData.email, password: receivedData.password})
-           console.log(singUp) 
-        }
+            const singUp = await register({ userName: receivedData.userName, email: receivedData.email, password: receivedData.password });
+            if(setMessage)
+            setMessage(singUp.message);
+            if(setType)
+            setType('success');
+            if(setNotificationTitle)
+            setNotificationTitle('Success');
+            if (setNotificationIsOpen)
+            setNotificationIsOpen(true);   
+            }
 
         if (
             !data?.email?.toString() ||
@@ -117,7 +124,7 @@ const FormContainer = () => {
      
         const result = await signInWithCredentials(receivedData.email, receivedData.password);
         if (result.status === 'error') {
-             if(setMessage)
+        if(setMessage)
         setMessage('Error: ' + ('An error occurred while logging in!'));
         if(setType)
         setType('error');
@@ -133,7 +140,7 @@ const FormContainer = () => {
         if(setNotificationTitle)
         setNotificationTitle('Success');
         if (setNotificationIsOpen)
-            setNotificationIsOpen(true);  
+        setNotificationIsOpen(true);  
            window.location.assign("/comment");   
         }
               

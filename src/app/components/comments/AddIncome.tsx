@@ -6,7 +6,14 @@ import {category} from '../../../db/categoryIncome';
 import { useAuthStore } from "@/store/auth.store";
 
  
-const AddIncome: React.FC<AddExpenseProps> = ({ isShowAdd, onToggle }: AddExpenseProps) => {
+const AddIncome: React.FC<AddExpenseProps> = ({ 
+    isShowAdd,
+    onToggle,
+    setMessage,
+    setNotificationIsOpen,
+    setType,
+    setNotificationTitle
+ }: AddExpenseProps) => {
     
      const { session } = useAuthStore();
         
@@ -18,10 +25,25 @@ const AddIncome: React.FC<AddExpenseProps> = ({ isShowAdd, onToggle }: AddExpens
     }
         const data = await addIncome(formData);
         
-         if (data.status !== 'error') {
+        if (data.status !== 'error') {
             console.log("successfully", data.message)
+            if(setMessage)
+              setMessage(data.message);
+              if(setType)
+               setType('success');
+              if(setNotificationTitle)
+              setNotificationTitle('Success');
+              if (setNotificationIsOpen)
+               setNotificationIsOpen(true); 
         } else {
-           console.log("Error", data.message);  
+           if(setMessage)
+           setMessage('Error: ' + (data.message));
+           if(setType)
+           setType('error');
+            if(setNotificationTitle)
+            setNotificationTitle('Error');
+            if(setNotificationIsOpen)
+            setNotificationIsOpen(true);   
         }
        
         isShowAdd();

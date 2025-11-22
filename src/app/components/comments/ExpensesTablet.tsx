@@ -176,16 +176,16 @@ const ExpensesTablet = ({ onToggle, filterData }: ExpensesProps) => {
                       if (setNotificationIsOpen)
                       setNotificationIsOpen(true); 
                                         
-                  } else {
-                  if(setMessage)
-                  setMessage('Error: ' + (resultUpdate.message));
-                  if(setType)
-                  setType('error');
-                  if(setNotificationTitle)
-                  setNotificationTitle('Error');
-                  if(setNotificationIsOpen)
-                  setNotificationIsOpen(true);   
-                    }
+                       } else {
+                       if(setMessage)
+                       setMessage('Error: ' + (resultUpdate.message));
+                       if(setType)
+                       setType('error');
+                       if(setNotificationTitle)
+                       setNotificationTitle('Error');
+                       if(setNotificationIsOpen)
+                       setNotificationIsOpen(true);   
+                         }
                  isRender();
                  if(onToggle)
                  onToggle();
