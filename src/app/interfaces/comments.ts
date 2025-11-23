@@ -8,6 +8,7 @@ export interface IComment {
   description: string;
   category: string;
   sum: number;
+  isEmpty?: boolean;
   owner: ObjectId | string;
   createdAt: Date | string;
   updatedAt: Date | string;

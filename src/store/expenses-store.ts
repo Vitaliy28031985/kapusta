@@ -5,6 +5,7 @@ import { create } from 'zustand';
 
 interface ExpenseState {
     data: IComment[];
+    isLoading: boolean;
     fetchExpenses: (userId: string,  filter: Data) => Promise<void>;
 
      addIsToggle: (
@@ -20,9 +21,12 @@ interface ExpenseState {
 
 export const useExpenseStore = create<ExpenseState>((set) => ({
     data: [],
+    isLoading: false,
     
     fetchExpenses: async (userId: string, filter) => {
         try {
+            set({ isLoading: true });
+            
             const response = await getExpensesData(userId, filter);
             const expenses: IComment[] = response.data?.data || [];
             
@@ -37,6 +41,8 @@ export const useExpenseStore = create<ExpenseState>((set) => ({
         } catch (error) {
             console.error("Error fetching expenses:", error);
             set({ data: [] });
+        } finally {
+            set({ isLoading: false });
         }
     },
 

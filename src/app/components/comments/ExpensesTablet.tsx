@@ -12,6 +12,8 @@ import { useAuthStore } from '@/store/auth.store';
 import { updateExpense } from '@/actions/updateExpense';
 import { deleteExpense } from '@/actions/deleteExpense';
 import AppNotification from '../ui/Notifications';
+import { getFilledRows } from '@/utils/get-filled-rows';
+import CommentsSkeleton from '../ui/CommentsSkeleton';
 
 
 const ExpensesTablet = ({ onToggle, filterData }: ExpensesProps) => {
@@ -22,7 +24,7 @@ const ExpensesTablet = ({ onToggle, filterData }: ExpensesProps) => {
   const [notificationTitle, setNotificationTitle] = useState<'Error' | 'Success' >('Success');
   
  const { session} = useAuthStore();
-  const {data, fetchExpenses, addIsToggle, updateField,} = useExpenseStore()
+  const {data, isLoading, fetchExpenses, addIsToggle, updateField,} = useExpenseStore()
       
   const userId = session?.user?.id;
 
@@ -65,6 +67,8 @@ const ExpensesTablet = ({ onToggle, filterData }: ExpensesProps) => {
 
   return (
     <section className='z-40 relative'>
+      {!isLoading ? (
+        <>
       <div className="tab:w-[624px] desk:w-[746px] max-h-[416px] mt-16 bg-bg_fon rounded-tl-[16px] rounded-tr-[16px]">
         <div className="flex items-center py-1">
           <div className="tab:w-[116px] desk:w-[136px] text-center text-sx font-bold">DATE</div>
@@ -79,7 +83,8 @@ const ExpensesTablet = ({ onToggle, filterData }: ExpensesProps) => {
           ref={scrollContainerRef}
           className="overflow-y-auto max-h-[300px] scrollbar-bt_col"
         >
-          {data?.map(({ _id, date, description, category, sum, isShow, isDelete }) => (
+          {getFilledRows(data)?.map(({ _id, date, description, category, sum, isShow, isDelete, isEmpty  }) => (
+
             <div key={_id.toString()} className="flex items-center py-1 mx-[2px] mb-[2px] bg-white shadow-shadow_menu">
               {isShow ? (
                 <>
@@ -118,12 +123,13 @@ const ExpensesTablet = ({ onToggle, filterData }: ExpensesProps) => {
                     />
                   </>
               ) : (
-                <><div className="tab:w-[116px] desk:w-[136px] text-center text-sx text-text_op">{formatDate(date.toString())}</div>
+                <><div className="tab:w-[116px] desk:w-[136px] text-center text-sx text-text_op">{isEmpty ? '' : formatDate(date.toString())}</div>
               <div className="tab:w-[190px] desk:w-[221px] text-sx text-text_op">{description}</div>
               <div className="tab:w-[156px] desk:w-[179px] text-center text-sx text-text_op">{category}</div>
-              <div className="tab:w-[105px] desk:w-[105px] text-center text-sx text-red_color">{`- ${sum} UAN.`}</div>
+              {isEmpty ? (<p className='opacity-0'>1</p>) : ( <div className="tab:w-[105px] desk:w-[105px] text-center text-sx text-red_color">{`- ${sum} UAN.`}</div>)}
+             
               </>)}
-              
+              {!isEmpty && (
               <div className="flex justify-center items-center tab:w-[105px] desk:w-[105px] gap-2 py-1">
                 <button onClick={async () => {
                   onDeleteToggle(_id.toString(), isDelete ?? false);
@@ -194,7 +200,9 @@ const ExpensesTablet = ({ onToggle, filterData }: ExpensesProps) => {
                   }} className="flex justify-center items-center text-text_color w-8 h-8 hover:bg-bg_fon rounded-full" type="button">
                   <BsFeather className="size-[18px]" />
                 </button>
-              </div>
+              </div>  
+              )}
+              
             </div>
           ))}
 
@@ -227,7 +235,9 @@ const ExpensesTablet = ({ onToggle, filterData }: ExpensesProps) => {
           text={message}
           onClose={() => setNotificationIsOpen(false)}
         />
-      )}
+        )}
+      </>) : (<CommentsSkeleton/>)}
+      
     </section>
   );
 };

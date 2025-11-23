@@ -5,6 +5,7 @@ import { create } from 'zustand';
 
 interface IncomesState {
     data: IComment[];
+    isLoading: boolean;
     fetchIncomes: (userId: string, filter: Data) => Promise<void>;
 
      addIsToggle: (
@@ -20,9 +21,11 @@ interface IncomesState {
 
 export const useIncomeStore = create<IncomesState>((set) => ({
     data: [],
+    isLoading: false,
     
     fetchIncomes: async (userId: string, filter) => {
         try {
+            set({ isLoading: true });
             const response = await getIncomesData(userId, filter);
             const incomes: IComment[] = response.data?.data || [];
             
@@ -37,6 +40,8 @@ export const useIncomeStore = create<IncomesState>((set) => ({
         } catch (error) {
             console.error("Error fetching expenses:", error);
             set({ data: [] });
+        } finally {
+            set({ isLoading: false });
         }
     },
 
