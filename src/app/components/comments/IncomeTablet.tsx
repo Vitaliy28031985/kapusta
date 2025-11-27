@@ -9,7 +9,6 @@ import { useIncomeStore } from '@/store/incomes-store';
 import { useAuthStore } from '@/store/auth.store';
 import { formatDate, toInputDate } from '@/utils/date-convector';
 import { updateIncome } from '@/actions/updateIncome';
-import { deleteIncome } from '@/actions/deleteIncome';
 import AppNotification from '../ui/Notifications';
 import CommentsSkeleton from '../ui/CommentsSkeleton';
 import { getFilledRows } from '@/utils/get-filled-rows';

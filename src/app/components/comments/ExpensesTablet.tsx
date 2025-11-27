@@ -30,7 +30,7 @@ const ExpensesTablet = ({ onToggle, filterData }: ExpensesProps) => {
 
   
 
-  const [deleteId, setDeleteId] = useState('')
+  const [deleteId, setDeleteId] = useState('');
 
   const [add, setAdd] = useState(false);
   const [render, setRender] = useState(false);

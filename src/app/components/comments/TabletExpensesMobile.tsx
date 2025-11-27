@@ -9,9 +9,9 @@ import { formatDate, toInputDate } from '@/utils/date-convector';
 import { useExpenseStore } from '@/store/expenses-store';
 import { useAuthStore } from '@/store/auth.store';
 import { category as categoryDb } from '../../../db/categoryExpenses';
-import { deleteExpense } from '@/actions/deleteExpense';
 import { updateExpense } from '@/actions/updateExpense';
 import AppNotification from '../ui/Notifications';
+import DeleteModal from '../ui/DeleteModal';
 
 
 const TabletExpensesMobile = ({ onToggle, filterData }: ExpensesProps) => {
@@ -19,7 +19,10 @@ const TabletExpensesMobile = ({ onToggle, filterData }: ExpensesProps) => {
   const [message, setMessage] = useState('');
   const [notificationIsOpen, setNotificationIsOpen] = useState(false);
   const [type, setType] = useState<'success' | 'error' | 'warning' | 'info'>('success');
-  const [notificationTitle, setNotificationTitle] = useState<'Error' | 'Success' >('Success');
+  const [notificationTitle, setNotificationTitle] = useState<'Error' | 'Success'>('Success');
+  
+  const [deleteId, setDeleteId] = useState('');
+  const [openDelete, setOpenDelete] = useState(false);
 
  const {data, fetchExpenses, addIsToggle, updateField} = useExpenseStore()
     
@@ -29,8 +32,10 @@ const TabletExpensesMobile = ({ onToggle, filterData }: ExpensesProps) => {
 
   const [add, setAdd] = useState(false);
   const [render, setRender] = useState(false);
+
   const isShowAdd = () => setAdd(prev => !prev);
   const isRender = () => setRender(prev => !prev);
+  const isOpenDeleteModal = () => setOpenDelete(openDelete => !openDelete);
   
     useEffect(() => {
         if (userId && filterData) {
@@ -111,29 +116,8 @@ const TabletExpensesMobile = ({ onToggle, filterData }: ExpensesProps) => {
             <div className='flex justify-center items-center'>
                 <button onClick={async () => {
                     onDeleteToggle(_id.toString(), isDelete ?? false);
-                    const resultDelete = await deleteExpense(_id.toString(), userId ?? '');
-                      if (resultDelete.status !== 'error') {
-                      setMessage(resultDelete.message);
-                      if(setType)
-                      setType('success');
-                      if(setNotificationTitle)
-                      setNotificationTitle('Success');
-                      if (setNotificationIsOpen)
-                      setNotificationIsOpen(true);  
-                    
-                  } else {
-                       if(setMessage)
-                       setMessage('Error: ' + (resultDelete.message));
-                       if(setType)
-                       setType('error');
-                       if(setNotificationTitle)
-                       setNotificationTitle('Error');
-                       if(setNotificationIsOpen)
-                       setNotificationIsOpen(true);    
-                  }
-                    isRender();
-                    if(onToggle)
-                   onToggle();
+                    setDeleteId(_id.toString());
+                    isOpenDeleteModal();
                 }} className='flex justify-center items-center text-text_color w-8 h-8 hover:bg-bg_fon rounded-full' type='button'><FaRegTrashCan className='size-[18px]'/></button>                   
                 <button onClick={async () => {
                                   onUpdateToggle(_id.toString(), isShow ?? false)
@@ -198,7 +182,19 @@ const TabletExpensesMobile = ({ onToggle, filterData }: ExpensesProps) => {
           text={message}
           onClose={() => setNotificationIsOpen(false)}
         />
-      )}
+        )}
+        {openDelete && (
+        < DeleteModal
+        _id={deleteId}
+        userId={userId ?? ''}
+        nameComponent='expenses'
+        toggle={isOpenDeleteModal}
+        toggleData={isRender}
+        setMessage={setMessage}
+        setNotificationIsOpen={setNotificationIsOpen}
+        setType={setType}
+        setNotificationTitle={setNotificationTitle}
+      />)}
        </section>
     )
 }
