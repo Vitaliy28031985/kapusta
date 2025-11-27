@@ -13,6 +13,7 @@ import { deleteIncome } from '@/actions/deleteIncome';
 import AppNotification from '../ui/Notifications';
 import CommentsSkeleton from '../ui/CommentsSkeleton';
 import { getFilledRows } from '@/utils/get-filled-rows';
+import DeleteModal from '../ui/DeleteModal';
 
 
 const IncomesTablet = ({ onToggle, filterData }: ExpensesProps) => {
@@ -20,7 +21,10 @@ const IncomesTablet = ({ onToggle, filterData }: ExpensesProps) => {
   const [message, setMessage] = useState('');
   const [notificationIsOpen, setNotificationIsOpen] = useState(false);
   const [type, setType] = useState<'success' | 'error' | 'warning' | 'info'>('success');
-  const [notificationTitle, setNotificationTitle] = useState<'Error' | 'Success' >('Success');
+  const [notificationTitle, setNotificationTitle] = useState<'Error' | 'Success'>('Success');
+  
+  const [deleteId, setDeleteId] = useState('');
+  const [openDelete, setOpenDelete] = useState(false);
 
   const { session} = useAuthStore();
   const {data, isLoading, fetchIncomes, addIsToggle, updateField,} = useIncomeStore()
@@ -40,6 +44,7 @@ const IncomesTablet = ({ onToggle, filterData }: ExpensesProps) => {
 
   const isShowAdd = () => setAdd(prev => !prev);
   const isRender = () => setRender(prev => !prev);
+  const isOpenDeleteModal = () => setOpenDelete(openDelete => !openDelete);
 
      
   
@@ -127,30 +132,9 @@ const IncomesTablet = ({ onToggle, filterData }: ExpensesProps) => {
               {!isEmpty && (
                <div className="flex justify-center items-center tab:w-[105px] desk:w-[105px] gap-2 py-1">
                 <button onClick={async () => {
-                 onDeleteToggle(_id.toString(), isDelete ?? false);
-                const resultDelete = await deleteIncome(_id.toString(), userId ?? '');
-                   if (resultDelete.status !== 'error') {
-                      setMessage(resultDelete.message);
-                      if(setType)
-                      setType('success');
-                      if(setNotificationTitle)
-                      setNotificationTitle('Success');
-                      if (setNotificationIsOpen)
-                      setNotificationIsOpen(true);  
-                    
-                  } else {
-                       if(setMessage)
-                       setMessage('Error: ' + (resultDelete.message));
-                       if(setType)
-                       setType('error');
-                       if(setNotificationTitle)
-                       setNotificationTitle('Error');
-                       if(setNotificationIsOpen)
-                       setNotificationIsOpen(true);    
-                  }
-                  isRender()
-                if(onToggle)
-                onToggle();
+                 onDeleteToggle(_id.toString(), isDelete ?? false); 
+                 setDeleteId(_id.toString())
+                 isOpenDeleteModal()
               }} className="flex justify-center items-center text-text_color w-8 h-8 hover:bg-bg_fon rounded-full" type="button">
                   <FaRegTrashCan className="size-[18px]" />
                 </button>
@@ -230,7 +214,20 @@ const IncomesTablet = ({ onToggle, filterData }: ExpensesProps) => {
         />
         )}
       </> 
-      ) : (<CommentsSkeleton/>)}
+      ) : (<CommentsSkeleton />)}
+      
+      {openDelete && (
+        < DeleteModal
+        _id={deleteId}
+        userId={userId ?? ''}
+        nameComponent='incomes'
+        toggle={isOpenDeleteModal}
+        toggleData={isRender}
+        setMessage={setMessage}
+        setNotificationIsOpen={setNotificationIsOpen}
+        setType={setType}
+        setNotificationTitle={setNotificationTitle}
+      />)}
      
     </section>
   );

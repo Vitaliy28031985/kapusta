@@ -10,10 +10,10 @@ import { useExpenseStore } from '@/store/expenses-store';
 import { category as categoryDb } from '../../../db/categoryExpenses';
 import { useAuthStore } from '@/store/auth.store';
 import { updateExpense } from '@/actions/updateExpense';
-import { deleteExpense } from '@/actions/deleteExpense';
 import AppNotification from '../ui/Notifications';
 import { getFilledRows } from '@/utils/get-filled-rows';
 import CommentsSkeleton from '../ui/CommentsSkeleton';
+import DeleteModal from '../ui/DeleteModal';
 
 
 const ExpensesTablet = ({ onToggle, filterData }: ExpensesProps) => {
@@ -28,14 +28,20 @@ const ExpensesTablet = ({ onToggle, filterData }: ExpensesProps) => {
       
   const userId = session?.user?.id;
 
+  
+
+  const [deleteId, setDeleteId] = useState('')
+
   const [add, setAdd] = useState(false);
   const [render, setRender] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const addRef = useRef<HTMLDivElement | null>(null);
 
 
   const isShowAdd = () => setAdd(prev => !prev);
   const isRender = () => setRender(prev => !prev);
+  const isOpenDeleteModal = () => setOpenDelete(openDelete => !openDelete);
 
   useEffect(() => {
       if (userId && filterData) {
@@ -132,30 +138,9 @@ const ExpensesTablet = ({ onToggle, filterData }: ExpensesProps) => {
               {!isEmpty && (
               <div className="flex justify-center items-center tab:w-[105px] desk:w-[105px] gap-2 py-1">
                 <button onClick={async () => {
-                  onDeleteToggle(_id.toString(), isDelete ?? false);
-                  const resultDelete = await deleteExpense(_id.toString(), userId ?? '');
-                   if (resultDelete.status !== 'error') {
-                      setMessage(resultDelete.message);
-                      if(setType)
-                      setType('success');
-                      if(setNotificationTitle)
-                      setNotificationTitle('Success');
-                      if (setNotificationIsOpen)
-                      setNotificationIsOpen(true);  
-                    
-                  } else {
-                       if(setMessage)
-                       setMessage('Error: ' + (resultDelete.message));
-                       if(setType)
-                       setType('error');
-                       if(setNotificationTitle)
-                       setNotificationTitle('Error');
-                       if(setNotificationIsOpen)
-                       setNotificationIsOpen(true);    
-                  }
-                 isRender();
-                 if(onToggle)
-                 onToggle();
+                    onDeleteToggle(_id.toString(), isDelete ?? false);
+                    setDeleteId(_id.toString())
+                    isOpenDeleteModal()
                 }}
                   className="flex justify-center items-center text-text_color w-8 h-8 hover:bg-bg_fon rounded-full" type="button">
                   <FaRegTrashCan className="size-[18px]" />
@@ -236,7 +221,20 @@ const ExpensesTablet = ({ onToggle, filterData }: ExpensesProps) => {
           onClose={() => setNotificationIsOpen(false)}
         />
         )}
-      </>) : (<CommentsSkeleton/>)}
+        </>) : (<CommentsSkeleton />)}
+      
+      {openDelete && (
+        < DeleteModal
+        _id={deleteId}
+        userId={userId ?? ''}
+        nameComponent='expenses'
+        toggle={isOpenDeleteModal}
+        toggleData={isRender}
+        setMessage={setMessage}
+        setNotificationIsOpen={setNotificationIsOpen}
+        setType={setType}
+        setNotificationTitle={setNotificationTitle}
+      />)}
       
     </section>
   );
