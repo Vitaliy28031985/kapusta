@@ -54,7 +54,7 @@ const ExpensesTablet = ({ onToggle, filterData }: ExpensesProps) => {
     if (add && scrollContainerRef.current && addRef.current) {
          addRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
-  }, [add]);
+  }, [add, isLoading]);
 
 
   

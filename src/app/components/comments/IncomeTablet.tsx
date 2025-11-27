@@ -51,7 +51,7 @@ const IncomesTablet = ({ onToggle, filterData }: ExpensesProps) => {
     if (add && scrollContainerRef.current && addRef.current) {
          addRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
-  }, [add]);
+  }, [add, isLoading]);
 
     const onDeleteToggle = (id: string, current: boolean) => {
     addIsToggle(id, !current, "delete");
