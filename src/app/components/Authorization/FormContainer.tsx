@@ -91,12 +91,31 @@ const FormContainer = () => {
             }
          
             if (data?.password?.toString() !== data?.confirmPassword?.toString()) {
-                alert("Passwords must match!");
+               
+                if(setMessage)
+                setMessage('Error: ' + ('Passwords must match!'));
+                if(setType)
+                setType('error');
+                if(setNotificationTitle)
+                setNotificationTitle('Error');
+                if(setNotificationIsOpen)
+                setNotificationIsOpen(true); 
                 return;
             }
 
             const singUp = await register({ userName: receivedData.userName, email: receivedData.email, password: receivedData.password });
-            if(setMessage)
+            if (singUp.status === 'error') {
+                 if(setMessage)
+                setMessage('Error: ' + (singUp.message));
+                if(setType)
+                setType('error');
+                if(setNotificationTitle)
+                setNotificationTitle('Error');
+                if(setNotificationIsOpen)
+                setNotificationIsOpen(true); 
+                return;
+           }
+            if (setMessage)
             setMessage(singUp.message);
             if(setType)
             setType('success');
