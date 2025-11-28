@@ -8,6 +8,11 @@ import { Income } from "@/models/Income";
 export const updateIncome = async (dto:
     { id: string; date: Date; description: string, category: string, sum: number, userId: string }) => {
   
+    
+       if (!dto?.id || !mongoose.Types.ObjectId.isValid(dto.id.toString())) {
+          throw new Error("Invalid user ID format");
+        }
+    
     const _id = new mongoose.Types.ObjectId(dto.id.toString());
     const date = dto.date ? new Date(dto.date) : null;
    

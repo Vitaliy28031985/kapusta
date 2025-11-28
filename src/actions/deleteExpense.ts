@@ -5,6 +5,12 @@ import { connectToDatabase } from "@/lib/mongodb";
 import { Expense } from "@/models/Expense";
 
 export const deleteExpense = async (id: string, userId: string) => {
+
+
+     if (!id || !mongoose.Types.ObjectId.isValid(id.toString())) {
+      throw new Error("Invalid user ID format");
+    }
+
     const _id = new mongoose.Types.ObjectId(id.toString()); 
    
 

@@ -10,6 +10,10 @@ export const addExpense = async (formData: FormData) => {
     const data = Object.fromEntries(formData.entries());
 
   const date = parseDate(data.date.toString());
+
+  if (!data?.id || !mongoose.Types.ObjectId.isValid(data.id.toString())) {
+  throw new Error("Invalid user ID format");
+}
  
     const id = new mongoose.Types.ObjectId(data.id.toString());
     
