@@ -8,6 +8,7 @@ import Register from "./Register";
 import { register } from "@/actions/register";
 import { signInWithCredentials } from "@/actions/sign-in";
 import AppNotification from "../ui/Notifications";
+import { signIn } from "next-auth/react";
 
 
 
@@ -150,7 +151,7 @@ const FormContainer = () => {
         <div className="mob-[280px] tab:w-[426px] tab:mx-auto desk:mx-0 mob:mt-5 tab:mt-20 desk:mt-0 mob:px-[20px] tab:px-[83.5px] mob:py-[40px] tab:py-[56px] bg-white rounded-[60px] shadow-shadow">
             {chang ? (<p className="mb-5 text-text_color text-sx font-normal text-center">You can register with your Google Account:</p>) : (<p className="mb-5 text-text_color text-sx font-normal text-center">You can log in with your Google Account:</p>)}
             
-            <button className="w-[119px] flex gap-1 mx-auto mb-8 px-5 py-3 bg-bg_fon text-text_color rounded-[50px] hover:border-bg_fon hover:bg-transparent hover:shadow-shadow" type="button">
+            <button  onClick={() => signIn("google")} className="w-[119px] flex gap-1 mx-auto mb-8 px-5 py-3 bg-bg_fon text-text_color rounded-[50px] hover:border-bg_fon hover:bg-transparent hover:shadow-shadow" type="button">
                 <Image src='/google.png' alt="google" width={19} height={18}></Image>
                 Google</button>
             

@@ -10,3 +10,11 @@ export async function getUserFromDb(email: string) {
 
     return await User.findOne({ email: normalizedEmail });
 }
+
+export async function createUserIfNotExists(email: string, data: any) {
+  const existing = await User.findOne({ email });
+  if (!existing) {
+    return await User.create(data);
+  }
+  return existing;
+}
