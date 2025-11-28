@@ -55,26 +55,31 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   
   callbacks: {
     
-    async signIn({ user, account }) {
-  try {
-    if (account?.provider === "google") {
-      await connectToDatabase();
-      await createUserIfNotExists(user.email!, {
-      email: user.email!,
-      userName: user.name || user.email!.split("@")[0],
-      password: "", 
-      provider: "google",
-    });
+ async signIn({ user, account }) {
+  if (account?.provider === "google") {
+    await connectToDatabase();
 
+    let dbUser = await getUserFromDb(user.email!);
+
+    if (!dbUser) {
+      await createUserIfNotExists(user.email!, {
+        email: user.email!,
+        userName: user.name || user.email!.split("@")[0],
+        password: "",
+        provider: "google",
+      });
+      dbUser = await getUserFromDb(user.email!);
     }
-    return true;
-  } catch (err) {
-    console.error("Google sign-in error:", err);
-    return false; 
+
+    user.id = dbUser._id.toString();
   }
+
+  return true;
 },
 
-  async jwt({ token, user }) {
+
+    async jwt({ token, user}) {
+  
     if (user) {
       token.id = user.id;
       token.email = user.email;

@@ -17,6 +17,7 @@ const AddExpense: React.FC<AddExpenseProps> = ({
     const { session } = useAuthStore();
     
     const userId = session?.user?.id;
+    
 
    
 

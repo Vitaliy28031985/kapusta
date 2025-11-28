@@ -9,7 +9,8 @@ import { parseDate } from "@/utils/date-convector";
 export const addExpense = async (formData: FormData) => {
     const data = Object.fromEntries(formData.entries());
 
-    const date = parseDate(data.date.toString());
+  const date = parseDate(data.date.toString());
+ 
     const id = new mongoose.Types.ObjectId(data.id.toString());
     
     const newData = {
