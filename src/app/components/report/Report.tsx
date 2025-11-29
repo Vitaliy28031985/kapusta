@@ -16,6 +16,7 @@ import { defaultData } from "@/app/interfaces/filter";
 import { getBalance } from "@/utils/get-balance";
 import { getSumExpenses, getSumIncomes } from "@/utils/get-sum-comments";
 import { getGraphsData } from "@/utils/get-graphs-data";
+import { getExpensesCategoryData } from "@/utils/get-expenses-category-data";
 
 
 const ReportContainer = () => {
@@ -55,7 +56,20 @@ const ReportContainer = () => {
 
     const incomesSum = getSumIncomes(incomes);
 
- 
+    const categoryIncomes = getExpensesCategoryData('incomes', incomes);
+    const categoryExpenses = getExpensesCategoryData('expenses', expenses)
+
+    const treeElementsIncomes = change && categoryIncomes.length <= 3;
+    const sixElementsIncomes = change && categoryIncomes.length > 3 && categoryIncomes.length <= 6;
+    const nineElementsIncomes = change && categoryIncomes.length > 6 && categoryIncomes.length <= 9;
+    const maxElementsIncomes = change && categoryIncomes.length > 9;
+    
+    const treeElementsExpenses = !change && categoryExpenses.length <= 3;
+    const sixElementsExpenses = !change && categoryExpenses.length > 3 && categoryExpenses.length <= 6;
+    const nineElementsExpenses = !change && categoryExpenses.length > 6 && categoryExpenses.length <= 9;
+    const maxElementsExpenses = !change &&  categoryExpenses.length > 9;
+
+     
     return (
         <main className="relative min-h-screen">
             
@@ -89,7 +103,17 @@ const ReportContainer = () => {
                  </div>    
                 </section>
                 <Balance expensesSum={expensesSum} incomesSum={incomesSum} />
-               <section className="mob:h-[630px] tab:h-[368px] mt-8 py-5  tab:bg-white rounded-[30px]  tab:shadow-shadow">
+                <section className={`
+                ${treeElementsIncomes && 'mob:h-[180px]'} 
+                ${sixElementsIncomes && 'mob:h-[350px]'}
+                ${nineElementsIncomes && 'mob:h-[490px]'}
+                ${maxElementsIncomes && 'mob:h-[630px]'}
+
+                ${treeElementsExpenses && 'mob:h-[180px]'} 
+                ${sixElementsExpenses && 'mob:h-[350px]'}
+                ${nineElementsExpenses && 'mob:h-[490px]'}
+                ${maxElementsExpenses && 'mob:h-[630px]'}
+                 tab:h-[368px] mt-8 py-5  tab:bg-white rounded-[30px]  tab:shadow-shadow`}>
             
                 {/* tabs */}
                <div className="flex items-center justify-center gap-2 tab:mb-5">
